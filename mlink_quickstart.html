@@ -984,76 +984,26 @@ waiting".</p>
 </section>
 <section class="chapter" id="busy-frequency"><header class="chapter-head"><span class="chapno">Chapter 14</span><h1>How demanding is it?</h1></header>
 
-<p>One long test on the simulated air put <strong>200 stations on one 20&nbsp;m
-frequency for six hours</strong>: a search-and-rescue net of 15, an evening
-net of 30, and 155 others ranging from chatty to silent, with 123 of the 200
-acting as mail gateways. Each station heard about 177 of the others, some
-station was transmitting about four fifths of the time, and nothing
-coordinated them except the two nets. The test was run twice with the same
-script, and the two runs differ; where they do, both figures are given.</p>
+<p>mLink makes heavy use of simulated airtime with real mLink stations using 
+a shared audio baseband, with applied per-station handicaps (some are deaf,
+others have fading with other stations) in various configurations.</p> 
+  
+<p>The most demanding simulation is a 20m frequency with 200 mLink
+stations on it, over the course of 6 hours, several concurrent events
+going on at the same time. A search-and-rescue net looking for a lost vessel,
+a casual evening net, several normal QSOs, and a few distruptive stations
+constantly calling CQ. The intent behind the simulation is to ensure that
+the protocol can guaranteee a Safety-Critical net can still perform well, despite
+competing traffic. </p>
 
-<table class="headline">
-<tbody>
-<tr>
-<td><strong>200</strong><br>stations on one frequency for six hours</td>
-<td><strong>777 and 788</strong><br>messages delivered of 802 sent to one station, 97 and 98&nbsp;%</td>
-<td><strong>190,000 to 230,000</strong><br>bytes of operator text, forms and mail carried</td>
-</tr>
-<tr>
-<td><strong>700 to 900&nbsp;bit/s</strong><br>for a transfer of several bulk frames, counting compression</td>
-<td><strong>half</strong><br>the size: what compression made of mail and forms</td>
-<td><strong>194</strong><br>stations logged the distress call, and the base acknowledged it</td>
-</tr>
-</tbody>
-</table>
+<p>Currently, the simulation performs "remarkably well" with most messages and mail
+delivered, despite the interference.</p>
 
-<table>
-<thead><tr><th>On the frequency</th><th>Result</th></tr></thead>
-<tbody>
-<tr><td>Some station transmitting</td><td>79 to 81&nbsp;% of the time, 1.2 to 1.3 stations at once</td></tr>
-<tr><td>Conversation lines delivered</td><td>410 and 412 of 413; half within 1.3 to 2.2&nbsp;minutes, nine in ten within 11 to 24</td></tr>
-<tr><td>Search-and-rescue traffic delivered</td><td>16 and 14 of 18</td></tr>
-<tr><td>Mail, forms and letters delivered</td><td>75 and 76 of 77, including 4 of 4 that needed a station in between</td></tr>
-<tr><td>Bulk transfers</td><td>10&nbsp;% of the messages, 29 to 51&nbsp;% of the bytes</td></tr>
-<tr><td>Speed from pressing send to arrival</td><td>5 to 8&nbsp;bit/s for a typical message, 93 to 202 for a large transfer: most of the time is spent waiting for a turn</td></tr>
-<tr><td>What the air carried</td><td>half message text; a sixth identification; a tenth hearing reports; a tenth openers and acknowledgements; the rest net, relay and mail frames</td></tr>
-<tr><td>Distress call</td><td>logged by 194 stations and acknowledged, in both runs</td></tr>
-</tbody>
-</table>
-
-<ul>
-<li><strong>It carries a busy frequency.</strong> Nearly everything short
-arrives within minutes; mail that waits for a gateway or for the addressee to
-come on the air takes tens of minutes.</li>
-<li><strong>What size costs is repeats, not the exchange.</strong> One typed
-line, acknowledged, costs 9.2&nbsp;s of air with 28 stations on or with 200.
-With 200, a third of the text frames are repeats of text that was lost under
-another station's transmission, often from a station out of the sender's
-range.</li>
-<li><strong>Weak spots under load, and their causes:</strong> a quarter to two
-fifths of the messages that asked for another station's help got no offer,
-mostly because a helper must have heard the addressee within the last two
-minutes and quiet stations identify themselves only once an hour; a large
-casual net's roll calls reached about one member in four or five, mostly
-because members had not yet learned their own number from the roster, which
-arrives three entries at a time; and about a hundred gateways answer one
-station's transmission in four to eight shared moments, so four fifths of
-"you have mail" announcements are repeats.</li>
-<li><strong>Also found:</strong> a gateway overhearing a mail carried by a
-relay names the relay as the author, and after five such deposits the
-mailserver refuses that station's deposits for ten minutes, its own mail
-included; and the largest message (46,000 bytes) arrived in one run of the
-two, since a message that size is only tried on a measured link.</li>
-<li><strong>The figures are from a script.</strong> The text was generated,
-so real mail will compress differently, and the simulated operators did not
-react to what they read.</li>
-<li><strong>On the computer:</strong> a station program on that busy frequency
-used about 3&nbsp;% of one processor core and 50&nbsp;MB of memory, before
-sound card, rig control and the client.</li>
-</ul>
-
-<p>The full manual's appendix "A Busy Frequency" has every figure, each weak
-spot's cause, and what the test does not show.</p>
+<p>The full manual's appendix "A Busy Frequency" has every current figure, current weaknesses,
+and what the test does not show. This sim is an active area of
+protocol improvement. A design goal is for mLink to be able to scale to
+256 concurrent stations on a single frequency while maintaining excellent
+delivery metrics and airtime performance.</p>
 
 </section>
 <section class="chapter" id="numbers"><header class="chapter-head"><span class="chapno">Chapter 15</span><h1>Numbers at a glance</h1></header>
