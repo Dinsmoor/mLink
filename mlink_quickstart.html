@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mLink Quickstart</title>
+<style>:root {
+  --ink: #1d1f23; --muted: #5b6270; --rule: #d5d9e0; --paper: #ffffff;
+  --accent: #1f5f8b; --accent-soft: #e9f2f8;
+  --why: #2f6b3a; --why-soft: #eaf5ec;
+  --tempt: #9a5a0b; --tempt-soft: #fbf1e3;
+  --plain: #4b3f8f; --plain-soft: #efedf9;
+  --note: #5b6270; --note-soft: #f3f4f6;
+  --code-bg: #f4f5f7;
+  --serif: "Charter", "Bitstream Charter", "Georgia", "Cambria", serif;
+  --sans: "Inter", "Helvetica Neue", "Segoe UI", "Arial", sans-serif;
+  --mono: "JetBrains Mono", "DejaVu Sans Mono", "Consolas", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink: #e4e6ea; --muted: #a2a9b6; --rule: #3a3f48; --paper: #16181c;
+    --accent: #7fb6dd; --accent-soft: #1d2a35;
+    --why: #8fcf9a; --why-soft: #1b2a1e;
+    --tempt: #e7b066; --tempt-soft: #2d2417;
+    --plain: #b7adf0; --plain-soft: #24213a;
+    --note: #a2a9b6; --note-soft: #202328; --code-bg: #20232a;
+  }
+}
+:root[data-theme="dark"] {
+  --ink: #e4e6ea; --muted: #a2a9b6; --rule: #3a3f48; --paper: #16181c;
+  --accent: #7fb6dd; --accent-soft: #1d2a35;
+  --why: #8fcf9a; --why-soft: #1b2a1e;
+  --tempt: #e7b066; --tempt-soft: #2d2417;
+  --plain: #b7adf0; --plain-soft: #24213a;
+  --note: #a2a9b6; --note-soft: #202328; --code-bg: #20232a;
+}
+
+* { box-sizing: border-box; }
+html { background: var(--paper); }
+body {
+  margin: 0 auto; max-width: 46rem; padding: 0 16px 4rem;
+  font-family: var(--serif); font-size: 17px; line-height: 1.6;
+  color: var(--ink); background: var(--paper);
+  hyphens: auto; -webkit-hyphens: auto;
+}
+h1, h2, h3, h4, .chapno, .toc, figcaption, caption, th, .part-title,
+aside::before, .backrefs { font-family: var(--sans); }
+h1 { font-size: 2rem; line-height: 1.2; margin: 0.2em 0 0.8em; }
+h2 { font-size: 1.35rem; margin: 2em 0 0.6em; line-height: 1.3; }
+h3 { font-size: 1.1rem; margin: 1.6em 0 0.4em; }
+h4 { font-size: 1rem; margin: 1.2em 0 0.3em; }
+.secno { color: var(--muted); font-weight: 600; margin-right: 0.35em; }
+p { margin: 0 0 0.9em; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+a.term {
+  color: inherit; text-decoration: underline dotted var(--accent);
+  text-underline-offset: 3px; text-decoration-thickness: 1.5px;
+}
+a.term:hover { background: var(--accent-soft); }
+.term.missing { outline: 1px dashed red; }
+.xref.broken { color: red; }
+code, kbd, pre { font-family: var(--mono); font-size: 0.86em; }
+code { background: var(--code-bg); padding: 0.05em 0.3em; border-radius: 3px; }
+pre {
+  background: var(--code-bg); padding: 0.8em 1em; border-radius: 4px;
+  overflow-x: auto; line-height: 1.4; white-space: pre-wrap;
+}
+.chain { font-family: var(--mono); font-size: 0.88em; white-space: nowrap; }
+ul, ol { padding-left: 1.4em; margin: 0 0 0.9em; }
+li { margin: 0.2em 0; }
+
+/* title page + contents */
+.titlepage { min-height: 80vh; display: flex; flex-direction: column;
+  justify-content: center; }
+.tp-mark { font-family: var(--sans); font-weight: 800; letter-spacing: 0.08em;
+  color: var(--accent); font-size: 1.1rem; text-transform: uppercase; }
+.tp-title { font-size: 3rem; margin: 0.1em 0 0.3em; }
+.tp-sub { font-size: 1.2rem; color: var(--muted); max-width: 32rem; }
+.toc ol { list-style: none; padding-left: 0; }
+.toc .toc-part { font-weight: 700; margin-top: 1.1em; text-transform: uppercase;
+  font-size: 0.85rem; letter-spacing: 0.04em; }
+.toc .toc-chap { font-weight: 600; margin-top: 0.35em; }
+.toc .toc-sec { padding-left: 1.6em; font-weight: 400; font-size: 0.9rem; }
+.toc .toc-sec li { margin: 0.05em 0; }
+.toc a { color: var(--ink); }
+
+/* chapters */
+.part { padding: 4rem 0 2rem; }
+.part-title { font-size: 2.4rem; color: var(--accent); }
+.chapter { padding-top: 3rem; }
+.chapter-head { border-bottom: 2px solid var(--accent); margin-bottom: 1.4em; }
+.chapno { display: block; color: var(--accent); font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.85rem; }
+.stub { color: var(--muted); font-style: italic; border: 1px dashed var(--rule);
+  padding: 1em; }
+
+/* callouts */
+aside {
+  margin: 1.2em 0; padding: 0.8em 1em 0.2em; border-left: 4px solid;
+  border-radius: 0 4px 4px 0; break-inside: avoid;
+}
+aside::before { display: block; font-weight: 700; font-size: 0.8rem;
+  text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.3em; }
+aside.plain { border-color: var(--plain); background: var(--plain-soft); }
+aside.plain::before { content: "In plain words"; color: var(--plain); }
+aside.why { border-color: var(--why); background: var(--why-soft); }
+aside.why::before { content: "Why it's done this way"; color: var(--why); }
+aside.tempting { border-color: var(--tempt); background: var(--tempt-soft); }
+aside.tempting::before { content: "The tempting alternative"; color: var(--tempt); }
+aside.note { border-color: var(--note); background: var(--note-soft); }
+aside.note::before { content: "Note"; color: var(--note); }
+aside.operator { border-color: var(--accent); background: var(--accent-soft); }
+aside.operator::before { content: "At the radio"; color: var(--accent); }
+
+/* figures + tables */
+figure { margin: 1.4em 0; break-inside: avoid; text-align: center; }
+figure svg, figure img { max-width: 100%; height: auto; }
+figure img { border: 1px solid var(--rule); }
+figcaption, caption { font-size: 0.85rem; color: var(--muted); text-align: left;
+  margin-top: 0.5em; line-height: 1.45; }
+.figno { font-weight: 700; color: var(--ink); }
+figure svg text { font-family: var(--sans); fill: var(--ink); }
+figure svg .muted { fill: var(--muted); }
+table { border-collapse: collapse; width: 100%; margin: 1.2em 0;
+  font-size: 0.9rem; break-inside: avoid; }
+caption { caption-side: top; margin: 0 0 0.4em; }
+th, td { border-bottom: 1px solid var(--rule); padding: 0.35em 0.5em;
+  text-align: left; vertical-align: top; }
+th { font-size: 0.82rem; border-bottom: 2px solid var(--ink); }
+.table-wrap { overflow-x: auto; }
+
+/* glossary */
+dl.glossary dt { font-family: var(--sans); font-weight: 700; margin-top: 0.9em; }
+dl.glossary dd { margin: 0.15em 0 0 1.2em; }
+.backrefs { display: block; font-size: 0.78rem; color: var(--muted); margin-top: 0.2em; }
+
+@media (max-width: 600px) {
+  body { font-size: 16px; }
+  .tp-title { font-size: 2.2rem; }
+  h1 { font-size: 1.6rem; }
+}
+
+/* ------------------------------------------------------------ print ---- */
+@page { size: letter; margin: 0.85in 0.8in 0.9in;
+  @bottom-center { content: counter(page); font-family: sans-serif;
+    font-size: 9pt; color: #666; } }
+@page :first { @bottom-center { content: none; } }
+@media print {
+  :root { --paper: #fff; --ink: #000; }
+  html, body { background: #fff; }
+  body { max-width: none; padding: 0; font-size: 10.5pt; line-height: 1.45; }
+  .titlepage { min-height: 9in; break-after: page; }
+  .toc { break-after: page; }
+  .toc .toc-sec { display: none; }
+  .part { break-before: page; padding-top: 3in; }
+  .part + .chapter { break-before: page; }
+  .chapter { break-before: page; padding-top: 0; }
+  h1, h2, h3, h4 { break-after: avoid; }
+  p, li { orphans: 3; widows: 3; }
+  a { color: inherit; }
+  a.term { text-decoration: none; border-bottom: 0.5pt dotted #999; }
+  aside { background: none !important; }
+  pre { white-space: pre-wrap; }
+}
+
+/* Quickstart: the pointer to the full manual at the foot of a page. */
+p.more { margin-top: 1.4em; font-size: 0.88em; color: var(--muted);
+         border-top: 1px solid var(--rule, #ccc); padding-top: 0.5em; }
+
+/* Headline figures: a few large numbers, each with a short label under it. */
+table.headline td { width: 33%; text-align: center; vertical-align: top;
+  padding: 0.9em 0.6em; line-height: 1.35; }
+table.headline td strong { display: block; font-size: 1.7em; line-height: 1.2; }
+</style></head>
+<body>
+<section class="titlepage">
+  <div class="tp-mark">mLink</div>
+  <h1 class="tp-title">mLink Quickstart</h1>
+  <p class="tp-sub">What mLink is and what it does, a page per topic</p>
+</section>
+<nav class="toc" id="contents"><h1>Contents</h1><ol><li class="toc-chap"><a href="#what-it-is">1 What mLink is</a></li><li class="toc-chap"><a href="#the-system">2 One system, top to bottom</a></li><li class="toc-chap"><a href="#the-signal">3 The signal</a></li><li class="toc-chap"><a href="#modems">4 Modulation and error correction</a></li><li class="toc-chap"><a href="#sending">5 How a message is sent</a><ol class="toc-sec"><li><a href="#sending--exchange">5.1 One exchange</a></li></ol></li><li class="toc-chap"><a href="#concurrency">6 Several conversations at once</a></li><li class="toc-chap"><a href="#relay">7 Automatic relay</a></li><li class="toc-chap"><a href="#mail">8 Mail</a><ol class="toc-sec"><li><a href="#mail--ways">8.1 How it travels</a></li><li><a href="#mail--receive">8.2 How it arrives</a></li><li><a href="#mail--rules">8.3 What to know</a></li></ol></li><li class="toc-chap"><a href="#nets">9 Named nets</a></li><li class="toc-chap"><a href="#emergency">10 Distress calls</a><ol class="toc-sec"><li><a href="#emergency--heard">10.1 When a station hears one</a></li></ol></li><li class="toc-chap"><a href="#clusters">11 Clusters: one station, several radios</a></li><li class="toc-chap"><a href="#more">12 Also built in</a><ol class="toc-sec"><li><a href="#more--finding">12.1 Stations find each other</a></li><li><a href="#more--maps">12.2 Position and maps</a></li><li><a href="#more--internet">12.3 Internet data over the air</a></li><li><a href="#more--operators">12.4 Operators and roles</a></li><li><a href="#more--security">12.5 Identity and encryption</a></li><li><a href="#more--fm">12.6 FM</a></li></ol></li><li class="toc-chap"><a href="#getting-started">13 Getting on the air</a><ol class="toc-sec"><li><a href="#getting-started--need">13.1 What you need</a></li><li><a href="#getting-started--steps">13.2 First steps</a></li><li><a href="#getting-started--expect">13.3 What to expect</a></li></ol></li><li class="toc-chap"><a href="#busy-frequency">14 How demanding is it?</a></li><li class="toc-chap"><a href="#numbers">15 Numbers at a glance</a></li></ol></nav>
+<main>
+<section class="chapter" id="what-it-is"><header class="chapter-head"><span class="chapno">Chapter 1</span><h1>What mLink is</h1></header>
+
+<p>mLink is a complete radio messaging system for organised communications:
+an HF data network, a mail system and a net-control tool in one package. It
+turns an SSB transceiver, a sound interface and a computer into a station
+that moves messages and mail directly, through other stations, or through
+the internet, whichever works.</p>
+
+<ul>
+<li><strong>Nets with accountability.</strong> A named net with a net
+control, a roster of up to 127 stations, and a roll call that takes twelve
+stations about 21 seconds. Bulletins come back with a record of who received
+them. Standing orders are kept by every member. If net control drops out, a
+member takes over (<a class="xref" href="#nets">Chapter 9</a>).</li>
+<li><strong>Mail to anywhere in the world.</strong> Any station with
+internet access is a gateway to a central mailserver. A station on one
+frequency can send mail to a station on a different frequency or band, in
+another region or another country, or to an ordinary email address. Mail
+waits until it is collected and never expires
+(<a class="xref" href="#mail">Chapter 8</a>).</li>
+<li><strong>Still works when the internet is gone.</strong> Stations
+exchange messages and mail by radio alone. When the recipient cannot hear
+the sender, a station that hears both delivers the message without being
+asked (<a class="xref" href="#relay">Chapter 7</a>).</li>
+<li><strong>Several exchanges on one frequency at once.</strong> Traffic
+does not queue behind one two-station session. A long transfer, several
+short exchanges and a distress call can be on the air together
+(<a class="xref" href="#concurrency">Chapter 6</a>).</li>
+<li><strong>Strong encryption, for services that may use it.</strong>
+AES-256-GCM, with keys agreed between two stations from signed certificates
+or shared across a group. It is for services such as MARS and SHARES whose
+rules allow it, and stays off on amateur frequencies. On every service, a
+mail carries proof of its author that the mailserver checks
+(<a class="xref" href="#more--security">Section 12.5</a>).</li>
+<li><strong>Strong compression.</strong> Every message is compressed with
+Zstandard at its highest setting, using a dictionary trained on radio
+traffic so that even a one-line message shrinks. Less to send means less
+time on the air and a better chance of getting through.</li>
+<li><strong>A distress call that gets through.</strong> A dedicated signal
+that decodes far below anything else on the frequency, which every station
+always listens for and passes on (<a class="xref" href="#emergency">Chapter 10</a>).</li>
+<li><strong>One station, several radios, several operators.</strong>
+Computers on different bands join into one station under one callsign.
+Operators sign in with their own accounts and roles, and a mail can record
+who wrote it and from which position
+(<a class="xref" href="#clusters">Chapter 11</a>).</li>
+<li><strong>A shared picture.</strong> Station positions, tracks, search
+areas and routes on every operator's map, and weather or other internet
+data fetched for stations that have no internet
+(<a class="xref" href="#more">Chapter 12</a>).</li>
+</ul>
+
+</section>
+<section class="chapter" id="the-system"><header class="chapter-head"><span class="chapno">Chapter 2</span><h1>One system, top to bottom</h1></header>
+
+<p>mLink is designed as a whole, from the modem on the air to the mailbox on
+the internet, and is intended as a full replacement for the Winlink network
+and its several separate programs: the mail client, the modem, the gateway
+software and the central mail servers. Because every layer is built for the
+others, nothing has to be configured to match, and no air time is spent on
+negotiation between them.</p>
+
+<figure id="what-is-mlink--fig-pieces">
+<svg viewBox="0 0 640 300" role="img" aria-label="Diagram: two operator
+clients connect to a station daemon, which connects to a radio. The daemon
+reaches the mailserver over the internet when internet is available. Other
+stations are reached by radio.">
+  <g font-size="13">
+    <!-- clients -->
+    <rect x="20" y="30" width="130" height="50" rx="6" style="fill:var(--accent-soft);stroke:var(--ink)"/>
+    <text x="85" y="52" text-anchor="middle" font-weight="700">Client</text>
+    <text x="85" y="70" text-anchor="middle" font-size="11" class="muted">desktop program</text>
+    <rect x="20" y="100" width="130" height="50" rx="6" style="fill:var(--accent-soft);stroke:var(--ink)"/>
+    <text x="85" y="122" text-anchor="middle" font-weight="700">Client</text>
+    <text x="85" y="140" text-anchor="middle" font-size="11" class="muted">in a web browser</text>
+    <!-- daemon -->
+    <rect x="235" y="45" width="170" height="90" rx="6" style="fill:var(--paper,#fff);stroke:var(--ink);stroke-width:2"/>
+    <text x="320" y="75" text-anchor="middle" font-weight="700">Station daemon</text>
+    <text x="320" y="95" text-anchor="middle" font-size="11" class="muted">modems, protocol,</text>
+    <text x="320" y="110" text-anchor="middle" font-size="11" class="muted">database, decisions</text>
+    <!-- links clients to daemon -->
+    <line x1="150" y1="55" x2="235" y2="75" style="stroke:var(--ink)"/>
+    <line x1="150" y1="125" x2="235" y2="105" style="stroke:var(--ink)"/>
+    <text x="192" y="160" text-anchor="middle" font-size="11" class="muted">commands and</text>
+    <text x="192" y="174" text-anchor="middle" font-size="11" class="muted">live updates</text>
+    <!-- radio -->
+    <rect x="465" y="55" width="150" height="70" rx="6" style="fill:var(--accent-soft);stroke:var(--ink)"/>
+    <text x="540" y="85" text-anchor="middle" font-weight="700">Radio</text>
+    <text x="540" y="103" text-anchor="middle" font-size="11" class="muted">via the sound card</text>
+    <line x1="405" y1="90" x2="465" y2="90" style="stroke:var(--ink);stroke-width:2"/>
+    <text x="435" y="82" text-anchor="middle" font-size="11" class="muted">audio</text>
+    <!-- air to other stations -->
+    <path d="M540 125 Q540 175 560 200" style="fill:none;stroke:var(--ink);stroke-dasharray:5 4"/>
+    <text x="555" y="225" text-anchor="middle" font-size="12">other stations</text>
+    <text x="555" y="241" text-anchor="middle" font-size="11" class="muted">(on the air)</text>
+    <!-- mailserver -->
+    <rect x="235" y="215" width="170" height="60" rx="6" style="fill:var(--accent-soft);stroke:var(--ink)"/>
+    <text x="320" y="240" text-anchor="middle" font-weight="700">Mailserver</text>
+    <text x="320" y="258" text-anchor="middle" font-size="11" class="muted">mailboxes, email bridge</text>
+    <line x1="320" y1="135" x2="320" y2="215" style="stroke:var(--ink);stroke-dasharray:2 3"/>
+    <text x="330" y="180" font-size="11" class="muted">internet, when a</text>
+    <text x="330" y="194" font-size="11" class="muted">station has it</text>
+  </g>
+</svg>
+<figcaption><span class="figno">Figure 2.1.</span> The station daemon runs the radio. Clients are windows onto it. The mailserver is on the internet and has no radio.</figcaption>
+</figure>
+
+<ul>
+<li>The <strong>station daemon</strong> runs the station: the modems, the
+receiver, the database and every decision about the air. It keeps working
+with nobody watching, so a station can be left unattended to relay and to
+carry mail.</li>
+<li>The <strong>client</strong> is what operators use: a desktop program or
+a web page. It can be on another computer, and several operators can work
+one station at once.</li>
+<li>The <strong>mailserver</strong> keeps a mailbox for each callsign on the
+internet and is central to getting mail delivered: it is where mail waits
+for a station that is off the air, out of range or on another frequency.</li>
+</ul>
+
+<table>
+<thead><tr><th>Job</th><th>Winlink</th><th>mLink</th></tr></thead>
+<tbody>
+<tr><td>Writing and reading mail</td><td>A client program</td><td>The client</td></tr>
+<tr><td>The signal on the air</td><td>A separate modem you must also have: VARA, ARDOP, packet, or a Pactor box costing well over a thousand dollars</td><td>The daemon's own three modems; a sound interface is the only hardware</td></tr>
+<tr><td>Choosing when and to whom to transmit</td><td>The operator picks a gateway and starts a session</td><td>The daemon, from what it has heard</td></tr>
+<tr><td>Radio to internet</td><td>Gateway software at stations set up for it</td><td>Any station with internet access</td></tr>
+<tr><td>Radio only, station to station</td><td>A separate network of chosen stations</td><td>Every station</td></tr>
+<tr><td>Holding mail</td><td>The central mail servers</td><td>The mailserver</td></tr>
+<tr><td>Nets, distress calls, maps, several bands</td><td>Other programs, or not covered</td><td>Built in</td></tr>
+</tbody>
+</table>
+
+<p>mLink is built to beat Pactor, VARA, ARDOP and packet where it counts:
+mail that arrives, and a frequency that carries everyone's traffic. With
+those modems an operator keeps a list of gateways, picks one, and hopes it
+is listening and in range. An mLink network works together: every station
+is always decoding and always helping, so there is no particular gateway to
+reach. Several exchanges run at once, there is no session to set up, only
+what was lost is sent again, weaker stations are reached, and hard
+compression can put mLink ahead of even the fastest of them for ordinary
+text. A simulated twelve-station net running for hours delivered every
+mail and every message.</p>
+
+<p class="more">Full manual: "What mLink Is".</p>
+
+</section>
+<section class="chapter" id="the-signal"><header class="chapter-head"><span class="chapno">Chapter 3</span><h1>The signal</h1></header>
+
+<p>An mLink channel is one SSB voice channel, about 3&nbsp;kHz wide. Inside
+it are three kinds of signal, each in its own strip of the audio, each with
+its own modem. A receiver decodes all of them all the time.</p>
+
+<figure id="passband-regions--fig-spectrum">
+<svg viewBox="0 0 640 300" role="img" aria-label="The mLink passband from 0 to 3000 Hz: a narrow emergency block at 125 to 175 Hz, three announce channels centred at 400, 800 and 1200 Hz, an optional 1400 Hz VOX leader tone, and the wide bulk block from 1594 to 2906 Hz with a bulk-control channel at 2250 Hz.">
+<defs>
+<pattern id="passband-regions--hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+<line x1="0" y1="0" x2="0" y2="6" style="stroke:var(--ink)" stroke-width="1.2"/>
+</pattern>
+</defs>
+<!-- allotment brackets -->
+<g style="fill:none;stroke:var(--muted)" stroke-width="1">
+<path d="M63.75,62 v-8 h9.5 v8"/>
+<path d="M78,62 v-8 h247 v8"/>
+<path d="M325,62 v-8 h285 v8"/>
+</g>
+<g style="fill:var(--ink)" font-size="12" text-anchor="middle">
+<text x="201.5" y="48">announce region 200–1500 Hz</text>
+<text x="467.5" y="48">bulk region 1500–3000 Hz</text>
+</g>
+<text x="40" y="30" font-size="12" style="fill:var(--ink)">emergency 125–175 Hz</text>
+<line x1="68.5" y1="34" x2="68.5" y2="52" style="stroke:var(--muted)" stroke-width="1"/>
+<!-- allotment boundary lines -->
+<g style="stroke:var(--muted)" stroke-width="1" stroke-dasharray="3,3">
+<line x1="78" y1="62" x2="78" y2="210"/>
+<line x1="325" y1="62" x2="325" y2="210"/>
+</g>
+<!-- emergency block -->
+<rect x="64.2" y="95" width="8.4" height="115" style="fill:var(--ink)"/>
+<!-- announce lobes -->
+<g style="fill:var(--accent-soft);stroke:var(--accent)" stroke-width="1.5">
+<path d="M90.35,210 C100,210 104,110 116,110 C128,110 132,210 141.65,210 Z"/>
+<path d="M166.35,210 C176,210 180,110 192,110 C204,110 208,210 217.65,210 Z"/>
+<path d="M242.35,210 C252,210 256,110 268,110 C280,110 284,210 293.65,210 Z"/>
+</g>
+<g style="fill:var(--ink)" font-size="11" text-anchor="middle">
+<text x="116" y="104">400</text>
+<text x="192" y="104">800</text>
+<text x="268" y="104">1200</text>
+</g>
+<!-- VOX leader -->
+<line x1="306" y1="120" x2="306" y2="210" style="stroke:var(--ink)" stroke-width="1.5" stroke-dasharray="2,2"/>
+<text x="312" y="118" font-size="11" style="fill:var(--ink)">VOX leader</text>
+<text x="312" y="131" font-size="11" style="fill:var(--ink)">1400 Hz (optional)</text>
+<!-- bulk block -->
+<path d="M342.86,210 L346.66,150 L588.34,150 L592.14,210 Z" style="fill:url(#passband-regions--hatch);stroke:var(--ink)" stroke-width="1.5"/>
+<!-- bulk-control channel -->
+<path d="M441.85,150 C451,150 455,112 467.5,112 C480,112 484,150 493.15,150" style="fill:none;stroke:var(--accent)" stroke-width="1.5" stroke-dasharray="4,3"/>
+<text x="467.5" y="104" font-size="11" text-anchor="middle" style="fill:var(--ink)">bulk-control 2250</text>
+<text x="467.5" y="178" font-size="12" text-anchor="middle" style="fill:var(--ink);stroke:var(--paper, white);stroke-width:4;paint-order:stroke">OFDM 1594–2906 Hz</text>
+<!-- axis -->
+<line x1="40" y1="210" x2="610" y2="210" style="stroke:var(--ink)" stroke-width="1.5"/>
+<g style="stroke:var(--ink)" stroke-width="1">
+<line x1="40" y1="210" x2="40" y2="216"/><line x1="135" y1="210" x2="135" y2="216"/>
+<line x1="230" y1="210" x2="230" y2="216"/><line x1="325" y1="210" x2="325" y2="216"/>
+<line x1="420" y1="210" x2="420" y2="216"/><line x1="515" y1="210" x2="515" y2="216"/>
+<line x1="610" y1="210" x2="610" y2="216"/>
+</g>
+<g style="fill:var(--ink)" font-size="11" text-anchor="middle">
+<text x="40" y="230">0</text><text x="135" y="230">500</text><text x="230" y="230">1000</text>
+<text x="325" y="230">1500</text><text x="420" y="230">2000</text><text x="515" y="230">2500</text>
+<text x="610" y="230">3000 Hz</text>
+</g>
+<!-- legend -->
+<g font-size="11" style="fill:var(--ink)">
+<rect x="40" y="252" width="12" height="12" style="fill:var(--ink)"/>
+<text x="58" y="262">emergency (8 tones)</text>
+<rect x="190" y="252" width="12" height="12" style="fill:var(--accent-soft);stroke:var(--accent)"/>
+<text x="208" y="262">announce channel (QPSK)</text>
+<rect x="370" y="252" width="12" height="12" style="fill:url(#passband-regions--hatch);stroke:var(--ink)"/>
+<text x="388" y="262">bulk (OFDM)</text>
+<line x1="40" y1="283" x2="70" y2="283" style="stroke:var(--muted)" stroke-dasharray="3,3"/>
+<text x="76" y="287">allotment boundary (not where energy stops)</text>
+</g>
+</svg>
+<figcaption><span class="figno">Figure 3.1.</span> One SSB channel: the emergency signal at the bottom, three announce channels in the lower middle, and the bulk signal at the top.</figcaption>
+</figure>
+
+<table>
+<thead><tr><th>Strip</th><th>Audio</th><th>Carries</th><th>Sounds like</th></tr></thead>
+<tbody>
+<tr><td>Emergency</td><td>125&ndash;175&nbsp;Hz</td><td>Distress calls only</td><td>A low, slow warble</td></tr>
+<tr><td>Announce, three channels</td><td>centred on 400, 800 and 1,200&nbsp;Hz</td><td>Station identification, short messages, acknowledgments, requests and replies</td><td>Short buzzy bursts, two thirds of a second each</td></tr>
+<tr><td>Bulk</td><td>1,500&ndash;3,000&nbsp;Hz</td><td>Long messages, mail and attachments</td><td>A wide, even hiss, 5.44&nbsp;seconds per frame</td></tr>
+</tbody>
+</table>
+
+<p>A fourth announce-type channel sits in the middle of the bulk strip, at
+2,250&nbsp;Hz. It carries the short frames that open and acknowledge a bulk
+transfer, and takes turns with the bulk signal.</p>
+
+<p>The strips are separated by empty spectrum, and every modem filters its
+own output, so a signal in one strip does not disturb another. Your radio's
+filters must pass audio from about 115&nbsp;Hz to about 2,900&nbsp;Hz, which
+is lower at the bottom than many voice settings.</p>
+
+<p class="more">Full manual: Part III, "The Signal".</p>
+
+</section>
+<section class="chapter" id="modems"><header class="chapter-head"><span class="chapno">Chapter 4</span><h1>Modulation and error correction</h1></header>
+
+<p>Each strip has a modem chosen for its job. This page says what they are;
+the full manual explains how they work.</p>
+
+<table>
+<thead><tr><th></th><th>Emergency</th><th>Announce</th><th>Bulk</th></tr></thead>
+<tbody>
+<tr><td>Modulation</td><td>8 tones, one at a time (8-FSK), 6.25&nbsp;Hz apart</td><td>QPSK on one carrier, 200 baud</td><td>OFDM: 28 carriers, 24 of QPSK data and 4 pilots</td></tr>
+<tr><td>Error correction</td><td>Reed-Solomon (23,11)</td><td>Reed-Solomon (23,11)</td><td>LDPC at rate 1/2, 3/4 or 5/6</td></tr>
+<tr><td>One frame carries</td><td>11 bytes</td><td>11 bytes</td><td>603, 907 or 1,008 bytes</td></tr>
+<tr><td>One frame lasts</td><td>10.24&nbsp;s</td><td>0.64&nbsp;s</td><td>5.44&nbsp;s at every rate</td></tr>
+<tr><td>Useful speed</td><td>about 9&nbsp;bit/s</td><td>about 130&nbsp;bit/s</td><td>about 900 to 1,500&nbsp;bit/s</td></tr>
+<tr><td>Decodes down to</td><td>&minus;17&nbsp;dB</td><td>&minus;5&nbsp;dB</td><td>about +3&nbsp;dB</td></tr>
+</tbody>
+</table>
+
+<p>Signal levels are signal-to-noise ratios measured in a 3&nbsp;kHz
+bandwidth. A report from FT8 or JS8 for the same signal reads about
+0.8&nbsp;dB higher.</p>
+
+<ul>
+<li><strong>The slower the signal, the deeper it reaches.</strong> A distress
+call decodes 12&nbsp;dB below the short frames and 20&nbsp;dB below the fast
+ones.</li>
+<li><strong>Reed-Solomon</strong> repairs up to 6 damaged bytes of the 23 in
+a short frame. A short frame fades out gradually: 99.7&nbsp;% decode at
+&minus;5&nbsp;dB and 95&nbsp;% at &minus;6&nbsp;dB.</li>
+<li><strong>LDPC</strong> works close to the theoretical limit and has a
+sharp edge: a bulk frame decodes perfectly or not at all. The station sends
+bulk only when it has measured the path at +6&nbsp;dB or better.</li>
+<li><strong>A bulk frame is the same length at every rate.</strong> A better
+path carries more bytes per frame, not shorter frames. The first frame of a
+transfer is always rate 1/2.</li>
+<li><strong>Everything is compressed first</strong> when that makes it
+smaller, and every message carries a 16-bit check so a damaged one is never
+delivered.</li>
+</ul>
+
+<p class="more">Full manual: "Error correction", "The emergency modem", "The
+announce modem", "Bulk OFDM".</p>
+
+</section>
+<section class="chapter" id="sending"><header class="chapter-head"><span class="chapno">Chapter 5</span><h1>How a message is sent</h1></header>
+
+<p>You never choose how a message goes out. The station picks from the size
+of the message and from how well the other station has been hearing you.</p>
+
+<table>
+<thead><tr><th>Size after compression</th><th>Sent as</th><th>Air time</th></tr></thead>
+<tbody>
+<tr><td>Up to 156 bytes</td><td>A <strong>shortburst</strong>: up to 16 announce frames in a row</td><td>2 to 12&nbsp;s</td></tr>
+<tr><td>157 to 601 bytes, weak path</td><td>A <strong>longburst</strong>: two to four shortbursts, each acknowledged</td><td>15 to 47&nbsp;s</td></tr>
+<tr><td>100 bytes and up, good path</td><td>A <strong>bulk transfer</strong>: up to 10 bulk frames per transmission, 64 in all</td><td>7&nbsp;s for one frame, 56&nbsp;s for ten</td></tr>
+</tbody>
+</table>
+
+<p>The largest message to one station is about 64,000 bytes after
+compression; a broadcast to everyone is limited to about 6,000.</p>
+
+<h2 id="sending--exchange"><span class="secno">5.1</span> One exchange</h2>
+
+<ol>
+<li>The station waits until it is not in another exchange, nobody has
+reserved the part of the passband it needs, and its receiver hears nothing.
+Then it waits a short random time, so stations that were all waiting do not
+key together.</li>
+<li>It sends one transmission. The first frame, PRESENCE, is the station's
+callsign and grid square, which is also its identification. The next says
+what follows and for whom. Then come the data frames.</li>
+<li>Stations that hear the opening stay off that part of the passband until
+the transfer is over.</li>
+<li>The recipient replies about two thirds of a second after the
+transmission ends: an acknowledgment if everything arrived, or a map of
+which frames did not.</li>
+<li>The sender repeats only the missing frames. A fade that destroys one
+frame in ten costs one frame, not the transfer.</li>
+</ol>
+
+<p>If no reply comes, the sender does not repeat the data. It asks one short
+question, "did you get that?", and if that is not answered either it looks
+for a relay (<a class="xref" href="#relay">Chapter 7</a>).</p>
+
+<p class="more">Full manual: "Mail in mLink", "Message sizes", "Reliable
+delivery".</p>
+
+</section>
+<section class="chapter" id="concurrency"><header class="chapter-head"><span class="chapno">Chapter 6</span><h1>Several conversations at once</h1></header>
+
+<p>Most data modes give the whole channel to one transmission at a time.
+mLink divides the channel, so stations that are not talking to each other do
+not have to wait for each other.</p>
+
+<figure id="passband-regions--fig-sum">
+<svg viewBox="0 0 640 250" role="img" aria-label="Time-frequency sketch of one listener's audio. Station A sends two opening frames on the bulk-control channel at 2250 Hz, then a bulk burst at 1594 to 2906 Hz. Station B sends a long distress call at 150 Hz through the same time. Station C sends two announce frames at 400 Hz, and station D two at 800 Hz. All overlap in time and are separated by frequency.">
+<!-- axes -->
+<line x1="70" y1="200" x2="620" y2="200" style="stroke:var(--ink)" stroke-width="1.5"/>
+<line x1="70" y1="200" x2="70" y2="20" style="stroke:var(--ink)" stroke-width="1.5"/>
+<text x="345" y="236" font-size="12" text-anchor="middle" style="fill:var(--ink)">time →</text>
+<g font-size="11" text-anchor="end" style="fill:var(--ink)">
+<text x="64" y="194">150</text><text x="64" y="163">400</text><text x="64" y="133">800</text>
+<text x="64" y="104">1500</text><text x="64" y="71">2250</text><text x="64" y="30">3000 Hz</text>
+</g>
+<!-- station B: emergency strip -->
+<rect x="90" y="186" width="510" height="10" style="fill:var(--ink)"/>
+<text x="345" y="215" font-size="11" text-anchor="middle" style="fill:var(--ink)">station B: distress call, 150 Hz</text>
+<!-- station C: announce frames at 400 -->
+<g style="fill:none;stroke:var(--ink)" stroke-width="1.2">
+<rect x="300" y="152" width="62" height="16"/>
+<rect x="366" y="152" width="62" height="16"/>
+</g>
+<text x="364" y="146" font-size="11" text-anchor="middle" style="fill:var(--ink)">station C</text>
+<!-- station D: announce frames at 800 -->
+<g style="fill:none;stroke:var(--ink)" stroke-width="1.2">
+<rect x="130" y="122" width="62" height="16"/>
+<rect x="196" y="122" width="62" height="16"/>
+</g>
+<text x="194" y="116" font-size="11" text-anchor="middle" style="fill:var(--ink)">station D</text>
+<!-- station A: opener on the bulk-control channel at 2250, then bulk -->
+<g style="fill:var(--accent-soft);stroke:var(--accent)" stroke-width="1.2">
+<rect x="110" y="59" width="62" height="16"/>
+<rect x="176" y="59" width="62" height="16"/>
+</g>
+<rect x="250" y="40" width="300" height="60" style="fill:url(#passband-regions--hatch);stroke:var(--accent)" stroke-width="1.2"/>
+<text x="400" y="74" font-size="12" text-anchor="middle" style="fill:var(--ink);stroke:var(--paper, white);stroke-width:4;paint-order:stroke">station A: bulk burst</text>
+<text x="174" y="52" font-size="11" text-anchor="middle" style="fill:var(--ink)">station A: presence, opener</text>
+<line x1="70" y1="104" x2="620" y2="104" style="stroke:var(--muted)" stroke-dasharray="3,3"/>
+</svg>
+<figcaption><span class="figno">Figure 6.1.</span> Three stations transmitting at the same moment in different strips. A receiver hears the sum and decodes each one.</figcaption>
+</figure>
+
+<ul>
+<li><strong>Five places to transmit.</strong> Three announce channels, the
+bulk strip and the emergency strip. A bulk transfer between two stations can
+run in the top of the passband while other stations exchange short messages
+on the announce channels and a distress call goes out underneath.</li>
+<li><strong>Every receiver decodes all of it, all the time.</strong> A
+station is never tuned to one conversation. It hears every frame in every
+strip, which is how it knows who is on the frequency, how strong they are
+and what has been sent.</li>
+<li><strong>Reservations cover one strip.</strong> The opening of a transfer
+reserves only the announce channel or the bulk strip it will use, for only
+as long as the transfer can last. The other strips stay free.</li>
+<li><strong>A new message picks any free announce channel at random,</strong>
+so two stations that start at the same moment usually land on different
+channels and both get through.</li>
+<li><strong>Listen before transmitting.</strong> A station does not key
+while its receiver hears a signal, and after the frequency goes quiet it
+waits a random time that grows with the number of stations it has heard.</li>
+<li><strong>Order of precedence:</strong> distress traffic, replies that are
+owed, the exchange already under way, new messages, then automatic traffic
+such as beacons.</li>
+</ul>
+
+<p>One station still transmits one thing at a time and cannot receive while
+it transmits. The gain is across stations: on a busy frequency several
+exchanges proceed side by side. It works: in a simulated net of twelve
+stations running for hours, not one frame was overlapped by another
+station's transmission. Even in a deliberately punishing search-and-rescue
+test, with two bands and many stations that cannot hear one another at all,
+97.8&nbsp;% or more of frames went out in the clear.</p>
+
+<p class="more">Full manual: "The passband and its regions", "Sharing the
+channel".</p>
+
+</section>
+<section class="chapter" id="relay"><header class="chapter-head"><span class="chapno">Chapter 7</span><h1>Automatic relay</h1></header>
+
+<p>On HF a station often cannot hear the one it wants, while a third station
+hears both. mLink uses that third station without anyone asking it to.</p>
+
+<figure id="one-message-journey--fig-relay-nodes">
+<svg viewBox="0 0 640 240" role="img" aria-label="Station B does not hear station A. A asks for a relay, station C offers and is picked, C sends its copy of the mail to B, and C tells A it was delivered.">
+  <defs><marker id="omj-a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="currentColor"/></marker></defs>
+  <g font-size="12" fill="currentColor" style="font-family:inherit">
+    <circle cx="110" cy="60" r="26" style="fill:var(--accent-soft);stroke:currentColor" stroke-width="1.5"/>
+    <text x="110" y="65" text-anchor="middle" font-weight="bold" font-size="16">A</text>
+    <text x="110" y="104" text-anchor="middle" style="fill:var(--muted)">sender</text>
+    <circle cx="530" cy="60" r="26" style="fill:var(--accent-soft);stroke:currentColor" stroke-width="1.5"/>
+    <text x="530" y="65" text-anchor="middle" font-weight="bold" font-size="16">B</text>
+    <text x="530" y="104" text-anchor="middle" style="fill:var(--muted)">recipient</text>
+    <circle cx="320" cy="160" r="26" style="fill:var(--accent-soft);stroke:currentColor" stroke-width="1.5"/>
+    <text x="320" y="165" text-anchor="middle" font-weight="bold" font-size="16">C</text>
+    <text x="320" y="204" text-anchor="middle" style="fill:var(--muted)">unattended</text>
+    <line x1="140" y1="60" x2="500" y2="60" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#omj-a2)"/>
+    <path d="M313 53 L327 67 M313 67 L327 53" stroke="currentColor" stroke-width="2" fill="none"/>
+    <text x="320" y="42" text-anchor="middle">1. the mail: B does not hear it</text>
+    <line x1="128" y1="82" x2="292" y2="154" stroke="currentColor" stroke-width="1.5" marker-end="url(#omj-a2)"/>
+    <text x="150" y="140" text-anchor="middle">2. A asks for a relay;</text>
+    <text x="150" y="155" text-anchor="middle">C offers, A picks C</text>
+    <line x1="348" y1="154" x2="512" y2="82" stroke="currentColor" stroke-width="1.5" marker-end="url(#omj-a2)"/>
+    <text x="492" y="140" text-anchor="middle">3. C sends its copy;</text>
+    <text x="492" y="155" text-anchor="middle">B replies to C</text>
+    <text x="320" y="230" text-anchor="middle" style="fill:var(--muted)">4. C tells A the mail was delivered</text>
+  </g>
+</svg>
+<figcaption><span class="figno">Figure 7.1.</span> B does not hear A. C, which hears both and overheard the message, delivers it.</figcaption>
+</figure>
+
+<ol>
+<li><strong>Every station keeps what it overhears.</strong> A message sent
+to someone else is held for a while by each station that decoded it.</li>
+<li><strong>The sender asks.</strong> When a message gets no reply, the
+sender transmits one short REQUEST naming the recipient and the message. It
+does not send the message again.</li>
+<li><strong>Stations that can help offer.</strong> A station offers only if
+it holds a copy, has heard the recipient in the last two minutes, and has a
+usable path to it. Offers go out in separate time slots so they do not
+collide, and each says how well that station hears the recipient. When many
+stations could help, each works out its own place in line, two answer per slot, and normally only
+the best two answer at all. A station far down the line stays silent and
+moves up each time a request goes unanswered, so that a crowd does not all
+answer at once.</li>
+<li><strong>The sender picks one,</strong> two seconds after the first good
+offer: the station with the best path to the recipient.</li>
+<li><strong>The relay delivers</strong> its copy in a transfer of its own,
+with repairs if needed. The recipient files the message under its original
+author.</li>
+<li><strong>The relay reports back,</strong> and the sender's outbox shows
+the message as sent.</li>
+</ol>
+
+<p>If nobody offers, the sender keeps the message and tries again when it
+next hears any station, first after one minute and then at gaps that double
+up to 32 minutes. Later requests also invite stations that hear the
+recipient but hold no copy; the sender hands one of them the message.</p>
+
+<p>No routes are configured and no station is a designated relay. Each
+relay is arranged for one message, from what stations have heard in the
+last few minutes.</p>
+
+<p class="more">Full manual: "Relay", "Finding each other".</p>
+
+</section>
+<section class="chapter" id="mail"><header class="chapter-head"><span class="chapno">Chapter 8</span><h1>Mail</h1></header>
+
+<p>Mail in mLink looks like email: a subject, recipients, copies, replies
+tied to the mail they answer, and attachments. You write it, send it and
+walk away.</p>
+
+<h2 id="mail--ways"><span class="secno">8.1</span> How it travels</h2>
+
+<ul>
+<li><strong>By radio, station to station.</strong> Directly to the
+recipient, or through a relay. No internet is involved at either end.</li>
+<li><strong>Through a gateway.</strong> A station with internet access says
+so on the air and becomes a gateway for the stations around it. It puts mail
+it overhears into the recipient's mailbox on the mailserver, and tells the
+sender it has taken it.</li>
+<li><strong>Across frequencies, bands and continents.</strong> Two stations
+do not have to share a frequency. Each needs only a gateway in radio range,
+or internet access of its own: the mail goes by radio to a gateway, over the
+internet to the mailserver, and out by radio from whichever gateway next
+hears the recipient, anywhere in the world.</li>
+<li><strong>To and from ordinary email.</strong> The mailserver passes mail
+between callsign mailboxes and internet email addresses, and runs mailing
+lists.</li>
+</ul>
+
+<h2 id="mail--receive"><span class="secno">8.2</span> How it arrives</h2>
+
+<p>You do not have to ask. When a gateway hears your station, it looks in
+your mailbox and tells your station what is waiting; your station fetches
+it. Several mails for one station travel together in one transfer.</p>
+
+<h2 id="mail--rules"><span class="secno">8.3</span> What to know</h2>
+
+<ul>
+<li><strong>Mail never expires.</strong> A mail that cannot be delivered now
+waits, at your station or in the mailbox, until its recipient turns up.</li>
+<li><strong>One station is responsible for a mail at a time.</strong> A
+gateway claims a mail only after the mailserver has confirmed it holds it,
+and other stations carrying the same mail then stop.</li>
+<li><strong>A mail fits one transfer:</strong> about 64,000 bytes compressed
+to one station.</li>
+<li><strong>The mailserver is what makes delivery dependable.</strong> It is
+where mail waits, and every gateway reaches it. Stations with no internet in
+reach still exchange mail by radio alone; that is a feature for when the
+internet is gone, not the usual path.</li>
+<li><strong>Nothing secret is sent by radio.</strong> A station proves who
+it is to the mailserver without transmitting a password.</li>
+<li><strong>Encrypted mail skips the mailserver.</strong> For services
+whose rules allow encryption, an encrypted mail goes over the air to its
+addressees only. No gateway deposits it and no station carries it, so nothing
+holds it for a station that is off the air. That is today's limit: help from the
+mailserver and from stations that cannot read the mail is planned, not built.</li>
+<li><strong>The mailserver is an early version.</strong> Today it is one
+server with no management tools beyond ordinary SQLite database tools.
+Stronger security, spreading mailboxes over several servers, automatic
+duplication and management tools are planned, not yet built.</li>
+</ul>
+
+<p class="more">Full manual: "Mail over the air", "The mailserver".</p>
+
+</section>
+<section class="chapter" id="nets"><header class="chapter-head"><span class="chapno">Chapter 9</span><h1>Named nets</h1></header>
+
+<p>Normally an mLink frequency has no net control. An operator who wants a
+net in the familiar sense can open one, give it a name, and let other
+stations join. Stations that do not join carry on as before on the same
+frequency.</p>
+
+<ul>
+<li><strong>Owner and net control.</strong> The net belongs to the station
+that opened it. Net control runs it. They are usually the same station, and
+the owner can hand net control to another member.</li>
+<li><strong>Roster.</strong> Up to 127 members, numbered in the order they
+joined. Net control repeats the roster a few entries at a time, so a station
+that arrives late learns it by listening.</li>
+<li><strong>Roll call.</strong> Net control sends one frame. Each member
+answers in its own 1.2-second slot with a single frame, in roster order,
+with no prompting. Twelve stations take about 21 seconds. A member that
+missed its slot gets a second try, and a member can vouch for one it
+hears that net control does not.</li>
+<li><strong>Bulletins.</strong> Up to 200 characters to every member,
+followed by a roll that shows who received it, and one repeat for those who
+did not.</li>
+<li><strong>Standing orders.</strong> One longer text that every member
+keeps. A member that does not have the current copy asks for it.</li>
+<li><strong>If net control goes quiet,</strong> a member takes over as a
+stand-in after three and a half cycles of silence, and the owner gets the
+net back when it returns.</li>
+<li><strong>During a roll call</strong> members hold their routine traffic,
+and stations outside the net keep off that one announce channel. The other
+channels and the bulk strip stay in use.</li>
+</ul>
+
+<p>A net is a layer of organisation, not a requirement. Messages, mail,
+relay and distress calls work the same with or without one.</p>
+
+<p class="more">Full manual: "Named nets".</p>
+
+</section>
+<section class="chapter" id="emergency"><header class="chapter-head"><span class="chapno">Chapter 10</span><h1>Distress calls</h1></header>
+
+<p>Any station can send a distress call, and every station is always
+listening for one. The call has its own strip at the bottom of the passband
+and its own modem, built to be heard when nothing else can be.</p>
+
+<ul>
+<li><strong>It reaches deepest.</strong> A distress call decodes at
+&minus;17&nbsp;dB, 12&nbsp;dB below any other mLink signal, and well below
+what you can see on a waterfall.</li>
+<li><strong>It is slow on purpose.</strong> One frame takes 10.24 seconds and
+carries 11 bytes. The first frame alone is a complete alert. Up to 14 more
+add who is calling and what is wrong, 13 characters each.</li>
+<li><strong>It repeats.</strong> A call goes out again about every 75 to 90
+seconds until someone acknowledges it or the operator cancels it. It
+survives a restart of the station software.</li>
+<li><strong>It leaves room for an answer.</strong> After each pass the
+calling station listens for at least 15 seconds.</li>
+<li><strong>It does not wait for anyone.</strong> Distress traffic ignores
+reservations, and sending a call cuts off whatever else the station was
+transmitting; that message is kept in Drafts. No setting, password or
+missing field can stop a call being sent. An empty call is still a valid
+call.</li>
+</ul>
+
+<h2 id="emergency--heard"><span class="secno">10.1</span> When a station hears one</h2>
+
+<ul>
+<li>It alerts its operator.</li>
+<li>It repeats the call in the announce strip after a short random wait, and
+stands down if another station does so first.</li>
+<li>A gateway puts the call in a mailbox watched for distress calls, so a
+person with a telephone can act on it.</li>
+<li>An operator can acknowledge it. The acknowledgment goes out twice: with
+contact details in the announce strip, and as one frame in the emergency
+strip, timed for the moment the caller starts listening, so the answer
+reaches as deep as the call did.</li>
+</ul>
+
+<p class="more">Full manual: "The emergency modem", "Emergency".</p>
+
+</section>
+<section class="chapter" id="clusters"><header class="chapter-head"><span class="chapno">Chapter 11</span><h1>Clusters: one station, several radios</h1></header>
+
+<p>A station can be more than one radio. Several computers, each running the
+daemon with its own radio on its own band, join into a cluster that shares
+one callsign and behaves as one station.</p>
+
+<figure id="clusters--fig-topology">
+<svg viewBox="0 0 640 380" role="img" aria-label="Three cluster members, each with its own radio and band, joined by the cluster link. Operators' clients connect to any member. Distant stations are heard by one member each.">
+  <g font-size="12" fill="currentColor" style="font-family:inherit">
+    <!-- cluster link cloud -->
+    <rect x="200" y="150" width="240" height="70" rx="34" style="fill:var(--accent-soft);stroke:var(--accent)" stroke-width="1.5" stroke-dasharray="6 4"/>
+    <text x="320" y="180" text-anchor="middle" font-weight="bold">cluster link</text>
+    <text x="320" y="198" text-anchor="middle">LAN or internet, never the radio</text>
+
+    <!-- member A -->
+    <rect x="30" y="140" width="140" height="90" rx="6" style="fill:none;stroke:currentColor" stroke-width="1.5"/>
+    <text x="100" y="162" text-anchor="middle" font-weight="bold">member "shack"</text>
+    <text x="100" y="182" text-anchor="middle">daemon + HF rig</text>
+    <text x="100" y="200" text-anchor="middle">40 m</text>
+    <text x="100" y="218" text-anchor="middle" style="fill:var(--muted)">internet gateway</text>
+
+    <!-- member B -->
+    <rect x="470" y="140" width="140" height="90" rx="6" style="fill:none;stroke:currentColor" stroke-width="1.5"/>
+    <text x="540" y="162" text-anchor="middle" font-weight="bold">member "hilltop"</text>
+    <text x="540" y="182" text-anchor="middle">daemon + VHF rig</text>
+    <text x="540" y="200" text-anchor="middle">2 m</text>
+
+    <!-- member C -->
+    <rect x="250" y="290" width="140" height="70" rx="6" style="fill:none;stroke:currentColor" stroke-width="1.5"/>
+    <text x="320" y="312" text-anchor="middle" font-weight="bold">member "trailer"</text>
+    <text x="320" y="332" text-anchor="middle">daemon + HF rig</text>
+    <text x="320" y="350" text-anchor="middle">80 m</text>
+
+    <!-- links from members to cloud -->
+    <line x1="170" y1="185" x2="200" y2="185" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+    <line x1="440" y1="185" x2="470" y2="185" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+    <line x1="320" y1="220" x2="320" y2="290" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+
+    <!-- remote stations on the air -->
+    <text x="100" y="40" text-anchor="middle">W7AAA (40 m)</text>
+    <path d="M100 48 L100 140" stroke="currentColor" stroke-width="1.2" fill="none"/>
+    <path d="M92 70 q8 -8 16 0 q8 8 16 0" stroke="currentColor" fill="none"/>
+    <text x="540" y="40" text-anchor="middle">K7BBB (2 m)</text>
+    <path d="M540 48 L540 140" stroke="currentColor" stroke-width="1.2" fill="none"/>
+    <path d="M532 70 q8 -8 16 0 q8 8 16 0" stroke="currentColor" fill="none"/>
+    <text x="130" y="100" style="fill:var(--muted)">on the air</text>
+    <text x="570" y="100" style="fill:var(--muted)">on the air</text>
+
+    <!-- clients -->
+    <rect x="250" y="30" width="140" height="50" rx="6" style="fill:none;stroke:currentColor" stroke-width="1" />
+    <text x="320" y="52" text-anchor="middle">operator's client</text>
+    <text x="320" y="70" text-anchor="middle" style="fill:var(--muted)">connects to any member</text>
+    <path d="M300 80 L150 140" stroke="currentColor" stroke-width="1" fill="none" stroke-dasharray="2 3"/>
+    <path d="M340 80 L490 140" stroke="currentColor" stroke-width="1" fill="none" stroke-dasharray="2 3"/>
+  </g>
+</svg>
+<figcaption><span class="figno">Figure 11.1.</span> Three members on three bands, joined over a network. Operators connect to any of them.</figcaption>
+</figure>
+
+<ul>
+<li><strong>The link between members is a network,</strong> a LAN or the
+internet. It is never the radio. Up to 16 members.</li>
+<li><strong>Everything heard is shared.</strong> A station heard on 40&nbsp;m
+by one member appears in the station list of every member, with the band it
+was heard on.</li>
+<li><strong>Traffic crosses bands.</strong> A message for a station that
+only the 80&nbsp;m member hears is carried over the link and sent from the
+80&nbsp;m radio.</li>
+<li><strong>One operator view.</strong> An operator's client connects to any
+member and works the whole station. Accounts, passwords and the mail
+identity are the same everywhere.</li>
+<li><strong>Mail is protected against losing a member.</strong> A member
+with internet access holds a copy of the others' unsent mail and takes it
+over if its owner has been silent for three minutes.</li>
+<li><strong>Each radio still decides for itself.</strong> When to transmit
+on a band is decided only from what that band's radio hears.</li>
+</ul>
+
+<p>Joining takes a label, the address of one existing member, and approval
+by an administrator who compares two key fingerprints.</p>
+
+<p class="more">Full manual: "Clusters".</p>
+
+</section>
+<section class="chapter" id="more"><header class="chapter-head"><span class="chapno">Chapter 12</span><h1>Also built in</h1></header>
+
+<h2 id="more--finding"><span class="secno">12.1</span> Stations find each other</h2>
+<p>A new station listens for ten minutes before it sends anything. If it
+hears other stations it joins in; if it hears nobody it asks whether anyone
+can hear it. After that it sends a short beacon now and then, less often on
+a crowded frequency. Every station keeps a list of who it has heard and how
+strongly, and stations pass each other short notes about who hears whom,
+which builds a map of the links on the frequency.</p>
+
+<h2 id="more--maps"><span class="secno">12.2</span> Position and maps</h2>
+<p>Every station is placed on a world map from its grid square, or exactly
+with a GPS. Stations can send position reports that leave a trail, and
+operators can share map objects such as search areas and routes. A message
+can be addressed to "any station in this area".</p>
+
+<h2 id="more--internet"><span class="secno">12.3</span> Internet data over the air</h2>
+<p>A station without internet can ask for data such as a weather report. A
+station with internet fetches it and sends back a compact answer.</p>
+
+<h2 id="more--operators"><span class="secno">12.4</span> Operators and roles</h2>
+<p>Several operators can work one station at once, each with an account.
+Three roles (operator, technician, administrator) decide who may change the
+station's settings. Sending a distress call is never restricted.</p>
+
+<h2 id="more--security"><span class="secno">12.5</span> Identity and encryption</h2>
+<p>mLink encrypts with AES-256-GCM. Two stations that each hold a
+signed certificate agree a key without sending
+anything secret, or a group shares one key in advance. A message is
+compressed first and then sealed. Encryption is for services whose rules
+allow it, such as MARS and SHARES; amateur rules forbid hiding what a
+message says, so it stays off there unless keys are loaded and it is asked
+for per message. Separately, and on every service, a mail carries a short
+proof of its author that the mailserver checks. Distress calls are never
+encrypted.</p>
+
+<h2 id="more--fm"><span class="secno">12.6</span> FM</h2>
+<p>FmLink is mLink for FM voice radios and repeaters. It works today and
+has been run on the air between two inexpensive handhelds keyed by VOX, the
+slowest way a radio can be keyed. Radios the computer controls directly
+will run a faster tier, and that is where the work is going. The cheap
+handheld is supported because so many people own one, not because it is a
+good way to run mLink.</p>
+
+<p class="more">Full manual: "Finding each other", "Position and maps",
+"Internet sources", "Accounts and roles", "Security".</p>
+
+</section>
+<section class="chapter" id="getting-started"><header class="chapter-head"><span class="chapno">Chapter 13</span><h1>Getting on the air</h1></header>
+
+<h2 id="getting-started--need"><span class="secno">13.1</span> What you need</h2>
+<ul>
+<li><strong>An SSB transceiver</strong> of the kind used for FT8 or JS8,
+with filters that pass audio from about 115 to 2,900&nbsp;Hz.</li>
+<li><strong>A sound interface</strong> between the radio and the computer:
+a SignaLink-type or Digirig-type box, or a radio with a sound card built
+in.</li>
+<li><strong>A way to key the transmitter:</strong> a serial control line,
+the radio's CAT control, or VOX. The first two are faster.</li>
+<li><strong>A Linux computer</strong> for the station daemon. The client
+runs on Linux, on Windows and in any web browser, and can be on another
+machine.</li>
+</ul>
+
+<h2 id="getting-started--steps"><span class="secno">13.2</span> First steps</h2>
+<ol>
+<li>Download the package, one file that holds the daemon, the client and
+the web client, and run it. It opens the client:
+<pre><code>chmod +x mLink-x86_64.AppImage
+./mLink-x86_64.AppImage</code></pre></li>
+<li>In the client, enter your callsign and grid square, choose the sound
+device and the keying method, and set the transmit audio level so the radio
+shows no ALC action.</li>
+<li>Tune to a frequency where mLink stations are active. Your station
+listens for ten minutes before it transmits by itself.</li>
+<li>Open the Stations window to see who you hear. Open Messages, write to
+one of them, and press Send.</li>
+</ol>
+
+<h2 id="getting-started--expect"><span class="secno">13.3</span> What to expect</h2>
+<ul>
+<li>A sent message may sit in the outbox for a few seconds, sometimes a
+minute, while the station waits for a free moment.</li>
+<li><em>Deferred</em> means the station still has the message and will try
+again. <em>Failed</em> means it has stopped, and says why.</li>
+<li>Your station also works for others: it relays, repeats distress calls
+and, with internet access, carries mail. You can limit this in the
+settings.</li>
+<li>You can close the client. The station keeps running.</li>
+</ul>
+
+<p class="more">Full manual: "Installing", "Operator guide", "Outbox and
+waiting".</p>
+
+</section>
+<section class="chapter" id="busy-frequency"><header class="chapter-head"><span class="chapno">Chapter 14</span><h1>How demanding is it?</h1></header>
+
+<p>One long test on the simulated air put <strong>200 stations on one 20&nbsp;m
+frequency for six hours</strong>: a search-and-rescue net of 15, an evening
+net of 30, and 155 others ranging from chatty to silent, with 123 of the 200
+acting as mail gateways. Each station heard about 177 of the others, some
+station was transmitting about four fifths of the time, and nothing
+coordinated them except the two nets. The test was run twice with the same
+script, and the two runs differ; where they do, both figures are given.</p>
+
+<table class="headline">
+<tbody>
+<tr>
+<td><strong>200</strong><br>stations on one frequency for six hours</td>
+<td><strong>777 and 788</strong><br>messages delivered of 802 sent to one station, 97 and 98&nbsp;%</td>
+<td><strong>190,000 to 230,000</strong><br>bytes of operator text, forms and mail carried</td>
+</tr>
+<tr>
+<td><strong>700 to 900&nbsp;bit/s</strong><br>for a transfer of several bulk frames, counting compression</td>
+<td><strong>half</strong><br>the size: what compression made of mail and forms</td>
+<td><strong>194</strong><br>stations logged the distress call, and the base acknowledged it</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead><tr><th>On the frequency</th><th>Result</th></tr></thead>
+<tbody>
+<tr><td>Some station transmitting</td><td>79 to 81&nbsp;% of the time, 1.2 to 1.3 stations at once</td></tr>
+<tr><td>Conversation lines delivered</td><td>410 and 412 of 413; half within 1.3 to 2.2&nbsp;minutes, nine in ten within 11 to 24</td></tr>
+<tr><td>Search-and-rescue traffic delivered</td><td>16 and 14 of 18</td></tr>
+<tr><td>Mail, forms and letters delivered</td><td>75 and 76 of 77, including 4 of 4 that needed a station in between</td></tr>
+<tr><td>Bulk transfers</td><td>10&nbsp;% of the messages, 29 to 51&nbsp;% of the bytes</td></tr>
+<tr><td>Speed from pressing send to arrival</td><td>5 to 8&nbsp;bit/s for a typical message, 93 to 202 for a large transfer: most of the time is spent waiting for a turn</td></tr>
+<tr><td>What the air carried</td><td>half message text; a sixth identification; a tenth hearing reports; a tenth openers and acknowledgements; the rest net, relay and mail frames</td></tr>
+<tr><td>Distress call</td><td>logged by 194 stations and acknowledged, in both runs</td></tr>
+</tbody>
+</table>
+
+<ul>
+<li><strong>It carries a busy frequency.</strong> Nearly everything short
+arrives within minutes; mail that waits for a gateway or for the addressee to
+come on the air takes tens of minutes.</li>
+<li><strong>What size costs is repeats, not the exchange.</strong> One typed
+line, acknowledged, costs 9.2&nbsp;s of air with 28 stations on or with 200.
+With 200, a third of the text frames are repeats of text that was lost under
+another station's transmission, often from a station out of the sender's
+range.</li>
+<li><strong>Weak spots under load, and their causes:</strong> a quarter to two
+fifths of the messages that asked for another station's help got no offer,
+mostly because a helper must have heard the addressee within the last two
+minutes and quiet stations identify themselves only once an hour; a large
+casual net's roll calls reached about one member in four or five, mostly
+because members had not yet learned their own number from the roster, which
+arrives three entries at a time; and about a hundred gateways answer one
+station's transmission in four to eight shared moments, so four fifths of
+"you have mail" announcements are repeats.</li>
+<li><strong>Also found:</strong> a gateway overhearing a mail carried by a
+relay names the relay as the author, and after five such deposits the
+mailserver refuses that station's deposits for ten minutes, its own mail
+included; and the largest message (46,000 bytes) arrived in one run of the
+two, since a message that size is only tried on a measured link.</li>
+<li><strong>The figures are from a script.</strong> The text was generated,
+so real mail will compress differently, and the simulated operators did not
+react to what they read.</li>
+<li><strong>On the computer:</strong> a station program on that busy frequency
+used about 3&nbsp;% of one processor core and 50&nbsp;MB of memory, before
+sound card, rig control and the client.</li>
+</ul>
+
+<p>The full manual's appendix "A Busy Frequency" has every figure, each weak
+spot's cause, and what the test does not show.</p>
+
+</section>
+<section class="chapter" id="numbers"><header class="chapter-head"><span class="chapno">Chapter 15</span><h1>Numbers at a glance</h1></header>
+
+<table>
+<thead><tr><th>Item</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Channel</td><td>One SSB channel; signals occupy 115 to 2,906&nbsp;Hz of audio</td></tr>
+<tr><td>Emergency strip</td><td>125&ndash;175&nbsp;Hz; 8-FSK; 10.24&nbsp;s per frame; decodes to &minus;17&nbsp;dB</td></tr>
+<tr><td>Announce channels</td><td>400, 800 and 1,200&nbsp;Hz; QPSK; 0.64&nbsp;s per frame; decodes to &minus;5&nbsp;dB</td></tr>
+<tr><td>Bulk strip</td><td>1,500&ndash;3,000&nbsp;Hz; OFDM, 28 carriers; 5.44&nbsp;s per frame; from about +3&nbsp;dB</td></tr>
+<tr><td>Bulk control channel</td><td>2,250&nbsp;Hz, shared in time with the bulk signal</td></tr>
+<tr><td>Error correction</td><td>Reed-Solomon (23,11) on short frames; LDPC rate 1/2, 3/4, 5/6 on bulk frames</td></tr>
+<tr><td>Bulk frame payload</td><td>603, 907 or 1,008 bytes by rate</td></tr>
+<tr><td>Useful speed</td><td>about 9, 130 and 900&ndash;1,500&nbsp;bit/s (emergency, announce, bulk)</td></tr>
+<tr><td>Signal levels</td><td>Signal-to-noise ratio in 3&nbsp;kHz</td></tr>
+<tr><td>Shortburst</td><td>1 to 156 bytes, up to 16 announce frames</td></tr>
+<tr><td>Longburst</td><td>157 to 601 bytes on a weak path</td></tr>
+<tr><td>Bulk transfer</td><td>up to 64 frames, 10 per transmission; about 64,000 bytes</td></tr>
+<tr><td>Largest broadcast</td><td>about 6,000 bytes</td></tr>
+<tr><td>Reply after a transmission</td><td>about two thirds of a second</td></tr>
+<tr><td>Relay offer conditions</td><td>holds a copy; heard the recipient within 2 minutes; path of &minus;5&nbsp;dB or better</td></tr>
+<tr><td>Retry gaps for a waiting message</td><td>1, 2, 4, 8, 16, then 32 minutes</td></tr>
+<tr><td>Mail lifetime</td><td>never expires</td></tr>
+<tr><td>Distress call</td><td>1 to 15 frames; up to 182 characters; repeats about every 75 to 90&nbsp;s</td></tr>
+<tr><td>Named net</td><td>up to 127 members; roll-call slot 1.2&nbsp;s</td></tr>
+<tr><td>Cluster</td><td>up to 16 members</td></tr>
+<tr><td>Frames sent in the clear, in simulation</td><td>all of them in a net where every station hears the others; at least 97.8&nbsp;% in a stress test where many stations cannot hear one another</td></tr>
+</tbody>
+</table>
+
+<p class="more">Every figure here is defined, with its source in the code,
+in Appendix A of the full manual.</p>
+
+</section>
+</main>
+</body></html>
