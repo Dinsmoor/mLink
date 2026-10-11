@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mLink Documentation</title>
+    <link rel="stylesheet" href="manual.css" />
+    <style>
+      body {
+        max-width: 46rem;
+      }
+
+      .doc-links {
+        list-style: none;
+        padding: 0;
+        margin: 2rem 0 0;
+      }
+
+      .doc-links li {
+        margin: 1rem 0;
+      }
+
+      .doc-card {
+        display: block;
+        padding: 1rem 1.1rem;
+        border: 1px solid var(--rule);
+        border-left: 4px solid var(--accent);
+        border-radius: 0.4rem;
+        background: var(--paper);
+        text-decoration: none;
+        color: var(--ink);
+      }
+
+      .doc-card:hover {
+        text-decoration: none;
+        background: var(--accent-soft);
+      }
+
+      .doc-card strong {
+        display: block;
+        font-family: var(--sans);
+        font-size: 1.1rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .doc-card span {
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body class="titlepage">
+    <div class="tp-mark">mLink</div>
+    <h1 class="tp-title">Documentation</h1>
+
+    <p class="tp-sub">
+      mLink is a complete radio messaging system for organised communications: an HF data network,
+      a mail system and a net-control tool in one package. It turns an SSB transceiver, a sound
+      interface and a computer into a capable messaging platform for emergency and recreational use.
+    </p>
+
+    <p>
+      This repository holds the current quickstart and full system manual for mLink. It is
+      considered a work in progress until stated otherwise.
+    </p>
+
+    <p>There are two documents for mLink you may be interested in:</p>
+
+    <ul class="doc-links">
+      <li>
+        <a class="doc-card" href="mlink_quickstart.html">
+          <strong>Quickstart</strong>
+          <span>A brief introduction to the mLink system. Start here if you're new to mLink.</span>
+        </a>
+      </li>
+      <li>
+        <a class="doc-card" href="mlink_manual.html">
+          <strong>mLink Manual</strong>
+          <span>Complete system documentation. Comprehensive reference for all mLink features and functionality.</span>
+        </a>
+      </li>
+    </ul>
+  </body>
+</html>
