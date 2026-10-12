@@ -57,7 +57,7 @@ a.term {
 }
 a.term:hover { background: var(--accent-soft); }
 .term.missing { outline: 1px dashed red; }
-.xref.broken { color: red; }
+.xref.broken, .xman.broken { color: red; }
 code, kbd, pre { font-family: var(--mono); font-size: 0.86em; }
 code { background: var(--code-bg); padding: 0.05em 0.3em; border-radius: 3px; }
 pre {
@@ -177,58 +177,69 @@ table.headline td strong { display: block; font-size: 1.7em; line-height: 1.2; }
   <h1 class="tp-title">mLink Quickstart</h1>
   <p class="tp-sub">What mLink is and what it does, a page per topic</p>
 </section>
-<nav class="toc" id="contents"><h1>Contents</h1><ol><li class="toc-chap"><a href="#what-it-is">1 What mLink is</a></li><li class="toc-chap"><a href="#the-system">2 One system, top to bottom</a></li><li class="toc-chap"><a href="#the-signal">3 The signal</a></li><li class="toc-chap"><a href="#modems">4 Modulation and error correction</a></li><li class="toc-chap"><a href="#sending">5 How a message is sent</a><ol class="toc-sec"><li><a href="#sending--exchange">5.1 One exchange</a></li></ol></li><li class="toc-chap"><a href="#concurrency">6 Several conversations at once</a></li><li class="toc-chap"><a href="#relay">7 Automatic relay</a></li><li class="toc-chap"><a href="#mail">8 Mail</a><ol class="toc-sec"><li><a href="#mail--ways">8.1 How it travels</a></li><li><a href="#mail--receive">8.2 How it arrives</a></li><li><a href="#mail--rules">8.3 What to know</a></li></ol></li><li class="toc-chap"><a href="#nets">9 Named nets</a></li><li class="toc-chap"><a href="#emergency">10 Distress calls</a><ol class="toc-sec"><li><a href="#emergency--heard">10.1 When a station hears one</a></li></ol></li><li class="toc-chap"><a href="#clusters">11 Clusters: one station, several radios</a></li><li class="toc-chap"><a href="#more">12 Also built in</a><ol class="toc-sec"><li><a href="#more--finding">12.1 Stations find each other</a></li><li><a href="#more--maps">12.2 Position and maps</a></li><li><a href="#more--internet">12.3 Internet data over the air</a></li><li><a href="#more--operators">12.4 Operators and roles</a></li><li><a href="#more--security">12.5 Identity and encryption</a></li><li><a href="#more--fm">12.6 FM</a></li></ol></li><li class="toc-chap"><a href="#getting-started">13 Getting on the air</a><ol class="toc-sec"><li><a href="#getting-started--need">13.1 What you need</a></li><li><a href="#getting-started--steps">13.2 First steps</a></li><li><a href="#getting-started--expect">13.3 What to expect</a></li></ol></li><li class="toc-chap"><a href="#busy-frequency">14 How demanding is it?</a></li><li class="toc-chap"><a href="#numbers">15 Numbers at a glance</a></li></ol></nav>
+<nav class="toc" id="contents"><h1>Contents</h1><ol><li class="toc-chap"><a href="#what-it-is">1 What mLink is</a></li><li class="toc-chap"><a href="#the-system">2 One system, top to bottom</a></li><li class="toc-chap"><a href="#the-signal">3 The signal</a></li><li class="toc-chap"><a href="#modems">4 Modulation and error correction</a></li><li class="toc-chap"><a href="#sending">5 How a message is sent</a><ol class="toc-sec"><li><a href="#sending--exchange">5.1 One exchange</a></li></ol></li><li class="toc-chap"><a href="#concurrency">6 Several conversations at once</a></li><li class="toc-chap"><a href="#relay">7 Automatic relay</a></li><li class="toc-chap"><a href="#mail">8 Mail</a><ol class="toc-sec"><li><a href="#mail--ways">8.1 How it travels</a></li><li><a href="#mail--receive">8.2 How it arrives</a></li><li><a href="#mail--rules">8.3 What to know</a></li></ol></li><li class="toc-chap"><a href="#nets">9 Named nets</a></li><li class="toc-chap"><a href="#emergency">10 Distress calls</a><ol class="toc-sec"><li><a href="#emergency--heard">10.1 When a station hears one</a></li></ol></li><li class="toc-chap"><a href="#clusters">11 Clusters: one station, several radios</a></li><li class="toc-chap"><a href="#more">12 Also built in</a><ol class="toc-sec"><li><a href="#more--finding">12.1 Stations find each other</a></li><li><a href="#more--maps">12.2 Position and maps</a></li><li><a href="#more--internet">12.3 Internet data over the air</a></li><li><a href="#more--operators">12.4 Operators and roles</a></li><li><a href="#more--security">12.5 Identity and encryption</a></li><li><a href="#more--fm">12.6 FM</a></li></ol></li><li class="toc-chap"><a href="#getting-started">13 Getting on the air</a><ol class="toc-sec"><li><a href="#getting-started--need">13.1 What you need</a></li><li><a href="#getting-started--steps">13.2 Installing and running mLink</a></li><li><a href="#getting-started--expect">13.3 What to expect</a></li></ol></li><li class="toc-chap"><a href="#busy-frequency">14 How demanding is it?</a></li><li class="toc-chap"><a href="#numbers">15 Numbers at a glance</a></li></ol></nav>
 <main>
 <section class="chapter" id="what-it-is"><header class="chapter-head"><span class="chapno">Chapter 1</span><h1>What mLink is</h1></header>
 
-<p>mLink is a complete radio messaging system for organised communications:
-an HF data network, a mail system and a net-control tool in one package. It
-turns an SSB transceiver, a sound interface and a computer into a station
-that moves messages and mail directly, through other stations, or through
-the internet, whichever works.</p>
+<p>mLink is a concurrent global radio mail system: a complete radio
+messaging system for organised communications, with an HF data network, a
+mail system and a net-control tool in one package. <em>Concurrent</em>
+because one frequency carries several exchanges at once instead of one
+session at a time. <em>Global</em> because any station with internet access
+is a gateway to a central mailserver, so a mail reaches any callsign on any
+band anywhere, and ordinary email too. And still a <em>radio</em> mail
+system: when the internet is gone, stations carry mail for each other by
+radio alone. It turns an SSB transceiver, a sound interface and a computer
+into a station that moves messages and mail directly, through other
+stations, or through the internet, whichever works. Each heading below
+links to the chapter of the full manual that explains it.</p>
 
 <ul>
-<li><strong>Nets with accountability.</strong> A named net with a net
-control, a roster of up to 127 stations, and a roll call that takes twelve
-stations about 21 seconds. Bulletins come back with a record of who received
-them. Standing orders are kept by every member. If net control drops out, a
-member takes over (<a class="xref" href="#nets">Chapter 9</a>).</li>
-<li><strong>Mail to anywhere in the world.</strong> Any station with
-internet access is a gateway to a central mailserver. A station on one
-frequency can send mail to a station on a different frequency or band, in
-another region or another country, or to an ordinary email address. Mail
-waits until it is collected and never expires
+<li><strong><a class="xman" href="mlink_manual.html#virtual-nets">Nets with accountability.</a></strong>
+A named net with a net control, a roster of up to 127 stations, and a roll
+call that takes twelve stations about 21 seconds. Bulletins come back with
+a record of who received them. Standing orders are kept by every member. If
+net control drops out, a member takes over (<a class="xref" href="#nets">Chapter 9</a>).</li>
+<li><strong><a class="xman" href="mlink_manual.html#mailserver">Mail to anywhere in the world.</a></strong>
+Any station with internet access is a gateway to a central mailserver. A
+station on one frequency can send mail to a station on a different
+frequency or band, in another region or another country, or to an ordinary
+email address. Mail waits until it is collected and never expires
 (<a class="xref" href="#mail">Chapter 8</a>).</li>
-<li><strong>Still works when the internet is gone.</strong> Stations
-exchange messages and mail by radio alone. When the recipient cannot hear
-the sender, a station that hears both delivers the message without being
-asked (<a class="xref" href="#relay">Chapter 7</a>).</li>
-<li><strong>Several exchanges on one frequency at once.</strong> Traffic
-does not queue behind one two-station session. A long transfer, several
-short exchanges and a distress call can be on the air together
+<li><strong><a class="xman" href="mlink_manual.html#relay">Still works when the internet is gone.</a></strong>
+Stations exchange messages and mail by radio alone. When the recipient
+cannot hear the sender, a station that hears both delivers the message
+without being asked (<a class="xref" href="#relay">Chapter 7</a>).</li>
+<li><strong><a class="xman" href="mlink_manual.html#sharing-the-channel">Several exchanges on one frequency at once.</a></strong>
+Traffic does not queue behind one two-station session. A long transfer,
+several short exchanges and a distress call can be on the air together
 (<a class="xref" href="#concurrency">Chapter 6</a>).</li>
-<li><strong>Strong encryption, for services that may use it.</strong>
+<li><strong><a class="xman" href="mlink_manual.html#security--encryption">Strong encryption, for services that may use it.</a></strong>
 AES-256-GCM, with keys agreed between two stations from signed certificates
-or shared across a group. It is for services such as MARS and SHARES whose
-rules allow it, and stays off on amateur frequencies. On every service, a
-mail carries proof of its author that the mailserver checks
+or shared across a group. It is meant for services such as MARS and SHARES
+whose rules allow it. It does nothing until keys are loaded and an operator
+asks for it on a message, and keeping it off amateur frequencies is the
+operator's responsibility, as with any other mode. On every service, a mail
+carries proof of its author that the mailserver checks
 (<a class="xref" href="#more--security">Section 12.5</a>).</li>
-<li><strong>Strong compression.</strong> Every message is compressed with
-Zstandard at its highest setting, using a dictionary trained on radio
-traffic so that even a one-line message shrinks. Less to send means less
-time on the air and a better chance of getting through.</li>
-<li><strong>A distress call that gets through.</strong> A dedicated signal
-that decodes far below anything else on the frequency, which every station
-always listens for and passes on (<a class="xref" href="#emergency">Chapter 10</a>).</li>
-<li><strong>One station, several radios, several operators.</strong>
+<li><strong><a class="xman" href="mlink_manual.html#inside-a-payload">Strong compression.</a></strong>
+Every message is compressed with Zstandard, helped by a dictionary trained
+on sample message traffic so that even a one-line message shrinks. Less to
+send means less time on the air and a better chance of getting through.
+Something already compressed, such as a photo attachment, is sent as it
+is.</li>
+<li><strong><a class="xman" href="mlink_manual.html#emergency">A distress call that gets through.</a></strong>
+A dedicated signal that decodes far below anything else on the frequency,
+which every station always listens for and passes on
+(<a class="xref" href="#emergency">Chapter 10</a>).</li>
+<li><strong><a class="xman" href="mlink_manual.html#clusters">One station, several radios, several operators.</a></strong>
 Computers on different bands join into one station under one callsign.
 Operators sign in with their own accounts and roles, and a mail can record
-who wrote it and from which position
-(<a class="xref" href="#clusters">Chapter 11</a>).</li>
-<li><strong>A shared picture.</strong> Station positions, tracks, search
-areas and routes on every operator's map, and weather or other internet
-data fetched for stations that have no internet
-(<a class="xref" href="#more">Chapter 12</a>).</li>
+who wrote it and from which position (<a class="xref" href="#clusters">Chapter 11</a>).</li>
+<li><strong><a class="xman" href="mlink_manual.html#position-and-maps">A shared picture.</a></strong>
+Station positions, tracks, search areas and routes on every operator's map,
+and weather or other internet data fetched for stations that have no
+internet (<a class="xref" href="#more">Chapter 12</a>).</li>
 </ul>
 
 </section>
@@ -287,23 +298,27 @@ stations are reached by radio.">
 </figure>
 
 <ul>
-<li>The <strong>station daemon</strong> runs the station: the modems, the
-receiver, the database and every decision about the air. It keeps working
-with nobody watching, so a station can be left unattended to relay and to
-carry mail.</li>
-<li>The <strong>client</strong> is what operators use: a desktop program or
-a web page. It can be on another computer, and several operators can work
-one station at once.</li>
-<li>The <strong>mailserver</strong> keeps a mailbox for each callsign on the
-internet and is central to getting mail delivered: it is where mail waits
-for a station that is off the air, out of range or on another frequency.</li>
+<li>The <strong><a class="xman" href="mlink_manual.html#what-is-mlink--daemon">station daemon</a></strong>
+runs the station: the modems, the receiver, the database and every decision
+about the air. It keeps working with nobody watching, so a station can be
+left unattended to relay and to carry mail. Everything your station has
+sent, received or overheard is kept in its own database, on your computer.</li>
+<li>The <strong><a class="xman" href="mlink_manual.html#what-is-mlink--client">client</a></strong>
+is what operators use: a desktop program or a web page. It can be on
+another computer, and several operators can work one station at once.</li>
+<li>The <strong><a class="xman" href="mlink_manual.html#what-is-mlink--mailserver">mailserver</a></strong>
+is a program on the internet with no radio of its own. It keeps a mailbox
+for each callsign and is central to getting mail delivered: it is where
+mail waits for a station that is off the air, out of range or on another
+frequency. Any station with internet access talks to it on behalf of the
+stations it hears. There is no mailserver at your station.</li>
 </ul>
 
 <table>
 <thead><tr><th>Job</th><th>Winlink</th><th>mLink</th></tr></thead>
 <tbody>
 <tr><td>Writing and reading mail</td><td>A client program</td><td>The client</td></tr>
-<tr><td>The signal on the air</td><td>A separate modem you must also have: VARA, ARDOP, packet, or a Pactor box costing well over a thousand dollars</td><td>The daemon's own three modems; a sound interface is the only hardware</td></tr>
+<tr><td>The signal on the air</td><td>A separate modem you must also have: VARA, ARDOP, packet, or a Pactor box costing well over a thousand dollars</td><td>The daemon's own three modems; a sound interface with a PTT line is the only hardware</td></tr>
 <tr><td>Choosing when and to whom to transmit</td><td>The operator picks a gateway and starts a session</td><td>The daemon, from what it has heard</td></tr>
 <tr><td>Radio to internet</td><td>Gateway software at stations set up for it</td><td>Any station with internet access</td></tr>
 <tr><td>Radio only, station to station</td><td>A separate network of chosen stations</td><td>Every station</td></tr>
@@ -318,12 +333,13 @@ those modems an operator keeps a list of gateways, picks one, and hopes it
 is listening and in range. An mLink network works together: every station
 is always decoding and always helping, so there is no particular gateway to
 reach. Several exchanges run at once, there is no session to set up, only
-what was lost is sent again, weaker stations are reached, and hard
+what was lost is sent again, weaker stations are reached, and strong
 compression can put mLink ahead of even the fastest of them for ordinary
-text. A simulated twelve-station net running for hours delivered every
-mail and every message.</p>
+text. In simulated twelve-station nets running for hours, every mail and
+every message was delivered.</p>
 
-<p class="more">Full manual: "What mLink Is".</p>
+<p class="more">Full manual: <a class="xman" href="mlink_manual.html#what-is-mlink">What mLink Is</a>;
+<a class="xman" href="mlink_manual.html#what-is-mlink--winlink">One system, top to bottom</a>.</p>
 
 </section>
 <section class="chapter" id="the-signal"><header class="chapter-head"><span class="chapno">Chapter 3</span><h1>The signal</h1></header>
@@ -410,22 +426,41 @@ its own modem. A receiver decodes all of them all the time.</p>
 <table>
 <thead><tr><th>Strip</th><th>Audio</th><th>Carries</th><th>Sounds like</th></tr></thead>
 <tbody>
-<tr><td>Emergency</td><td>125&ndash;175&nbsp;Hz</td><td>Distress calls only</td><td>A low, slow warble</td></tr>
-<tr><td>Announce, three channels</td><td>centred on 400, 800 and 1,200&nbsp;Hz</td><td>Station identification, short messages, acknowledgments, requests and replies</td><td>Short buzzy bursts, two thirds of a second each</td></tr>
-<tr><td>Bulk</td><td>1,500&ndash;3,000&nbsp;Hz</td><td>Long messages, mail and attachments</td><td>A wide, even hiss, 5.44&nbsp;seconds per frame</td></tr>
+<tr><td><a class="xman" href="mlink_manual.html#passband-regions--emergency">Emergency</a></td><td>125&ndash;175&nbsp;Hz</td><td>Distress calls only</td><td>A low, slow warble</td></tr>
+<tr><td><a class="xman" href="mlink_manual.html#passband-regions--announce">Announce</a>, three channels</td><td>centred on 400, 800 and 1,200&nbsp;Hz</td><td>Station identification, short messages, acknowledgments, requests and replies</td><td>Short buzzy bursts, two thirds of a second each</td></tr>
+<tr><td><a class="xman" href="mlink_manual.html#passband-regions--bulk">Bulk</a></td><td>1,500&ndash;3,000&nbsp;Hz</td><td>Long messages, mail and attachments</td><td>A wide, even hiss, 5.44&nbsp;seconds per frame</td></tr>
 </tbody>
 </table>
 
-<p>A fourth announce-type channel sits in the middle of the bulk strip, at
-2,250&nbsp;Hz. It carries the short frames that open and acknowledge a bulk
-transfer, and takes turns with the bulk signal.</p>
+<p>A fourth announce-type channel, the
+<a class="xman" href="mlink_manual.html#passband-regions--bulk-control">bulk-control channel</a>,
+sits in the middle of the bulk strip at 2,250&nbsp;Hz. It carries only the
+short frames that open and acknowledge a bulk transfer, and takes turns
+with the bulk signal. It lives there rather than on an announce channel for
+a practical reason: most messages and mail compress small enough to go as
+short frames, so the bulk strip is quiet most of the time, while the
+announce channels get busier as more stations come on. Keeping a bulk
+transfer's own openers and replies inside the bulk strip means they are
+never held up by unrelated chatter, which matters because the two ends of
+a transfer are working to a reply deadline.</p>
 
 <p>The strips are separated by empty spectrum, and every modem filters its
 own output, so a signal in one strip does not disturb another. Your radio's
 filters must pass audio from about 115&nbsp;Hz to about 2,900&nbsp;Hz, which
-is lower at the bottom than many voice settings.</p>
+is lower at the bottom than many voice settings. The placement of the
+strips is the result of a year of simulation; it may still move once
+mLink has been run between several real radios on the real ionosphere.</p>
 
-<p class="more">Full manual: Part III, "The Signal".</p>
+<p><strong>Four words this document uses carefully.</strong> A
+<em>frame</em> is one block of modulated data, the thing a modem sends and
+decodes. A <em>transmission</em> is one press of the key: one or more
+frames, then the radio unkeys. A <em>message</em> is what an operator
+sends, from one typed line up to about 64,000 bytes, carried by as many
+frames and transmissions as it takes. <em>Mail</em> is a message with a
+subject, recipients and attachments, which the mailserver can hold.</p>
+
+<p class="more">Full manual: <a class="xman" href="mlink_manual.html#passband-regions">One Passband, Three Regions</a>;
+<a class="xman" href="mlink_manual.html#transmission-unit">The Transmission Is the Unit</a>.</p>
 
 </section>
 <section class="chapter" id="modems"><header class="chapter-head"><span class="chapno">Chapter 4</span><h1>Modulation and error correction</h1></header>
@@ -434,41 +469,55 @@ is lower at the bottom than many voice settings.</p>
 the full manual explains how they work.</p>
 
 <table>
-<thead><tr><th></th><th>Emergency</th><th>Announce</th><th>Bulk</th></tr></thead>
+<thead><tr><th></th><th><a class="xman" href="mlink_manual.html#emergency-modem">Emergency</a></th><th><a class="xman" href="mlink_manual.html#announce-modem">Announce</a></th><th><a class="xman" href="mlink_manual.html#bulk-ofdm">Bulk</a></th></tr></thead>
 <tbody>
-<tr><td>Modulation</td><td>8 tones, one at a time (8-FSK), 6.25&nbsp;Hz apart</td><td>QPSK on one carrier, 200 baud</td><td>OFDM: 28 carriers, 24 of QPSK data and 4 pilots</td></tr>
+<tr><td>Modulation</td><td>8 tones, one at a time (8-FSK), 6.25&nbsp;Hz apart</td><td>QPSK on one carrier</td><td>OFDM: 28 carriers 46.875&nbsp;Hz apart, 24 of QPSK data and 4 pilots</td></tr>
+<tr><td>Symbol rate</td><td>6.25 baud</td><td>200 baud</td><td>37.5 symbols per second on each carrier</td></tr>
 <tr><td>Error correction</td><td>Reed-Solomon (23,11)</td><td>Reed-Solomon (23,11)</td><td>LDPC at rate 1/2, 3/4 or 5/6</td></tr>
 <tr><td>One frame carries</td><td>11 bytes</td><td>11 bytes</td><td>603, 907 or 1,008 bytes</td></tr>
 <tr><td>One frame lasts</td><td>10.24&nbsp;s</td><td>0.64&nbsp;s</td><td>5.44&nbsp;s at every rate</td></tr>
 <tr><td>Useful speed</td><td>about 9&nbsp;bit/s</td><td>about 130&nbsp;bit/s</td><td>about 900 to 1,500&nbsp;bit/s</td></tr>
-<tr><td>Decodes down to</td><td>&minus;17&nbsp;dB</td><td>&minus;5&nbsp;dB</td><td>about +3&nbsp;dB</td></tr>
+<tr><td>Decodes down to</td><td>&minus;15&nbsp;dB for one frame; a call reaches &minus;17&nbsp;dB because it repeats</td><td>&minus;5&nbsp;dB</td><td>about +3&nbsp;dB at rate 1/2; rates 3/4 and 5/6 need about 1 and 2&nbsp;dB more</td></tr>
 </tbody>
 </table>
 
-<p>Signal levels are signal-to-noise ratios measured in a 3&nbsp;kHz
-bandwidth. A report from FT8 or JS8 for the same signal reads about
-0.8&nbsp;dB higher.</p>
+<p>Signal levels are signal-to-noise ratios in a 3&nbsp;kHz bandwidth
+(<a class="xman" href="mlink_manual.html#radio-basics--snr3k">the SNR@3k yardstick</a>). A
+report from FT8 or JS8 for the same signal reads about 0.8&nbsp;dB higher.
+"Decodes down to" means the level at which nearly every frame still gets
+through: 99.7&nbsp;% of short frames at &minus;5&nbsp;dB, 96&nbsp;% of
+emergency frames at &minus;15, and 19 bulk frames in 20 at +3. All three
+were measured in steady noise, through the whole receive path; the full
+manual has the curves.</p>
 
 <ul>
 <li><strong>The slower the signal, the deeper it reaches.</strong> A distress
 call decodes 12&nbsp;dB below the short frames and 20&nbsp;dB below the fast
 ones.</li>
 <li><strong>Reed-Solomon</strong> repairs up to 6 damaged bytes of the 23 in
-a short frame. A short frame fades out gradually: 99.7&nbsp;% decode at
-&minus;5&nbsp;dB and 95&nbsp;% at &minus;6&nbsp;dB.</li>
-<li><strong>LDPC</strong> works close to the theoretical limit and has a
-sharp edge: a bulk frame decodes perfectly or not at all. The station sends
-bulk only when it has measured the path at +6&nbsp;dB or better.</li>
+a short frame, and <a class="xman" href="mlink_manual.html#error-correction--slope">fades out gradually</a>:
+99.7&nbsp;% decode at &minus;5&nbsp;dB, 95&nbsp;% at &minus;6, two thirds at
+&minus;7.</li>
+<li><strong>LDPC</strong> works close to the theoretical limit and
+<a class="xman" href="mlink_manual.html#error-correction--why-cliff">has a sharp edge</a>: at
++3&nbsp;dB nearly every bulk frame decodes, and 2&nbsp;dB lower none do. A
+frame of any kind is either delivered whole or not at all, because every
+message carries a check; what is special about LDPC is that there is no
+gradual slope between working and not working. So the station sends bulk
+only when it estimates the path at +6&nbsp;dB or better, which leaves
+3&nbsp;dB in hand. The estimate comes from what the other station reports
+hearing of you, or, failing that, from how well you hear it.</li>
 <li><strong>A bulk frame is the same length at every rate.</strong> A better
 path carries more bytes per frame, not shorter frames. The first frame of a
 transfer is always rate 1/2.</li>
-<li><strong>Everything is compressed first</strong> when that makes it
-smaller, and every message carries a 16-bit check so a damaged one is never
-delivered.</li>
+<li><strong>Everything is compressed for transmission</strong> when doing so
+makes it smaller, and every message carries a 16-bit check so a damaged one
+is never delivered.</li>
 </ul>
 
-<p class="more">Full manual: "Error correction", "The emergency modem", "The
-announce modem", "Bulk OFDM".</p>
+<p class="more">Full manual: <a class="xman" href="mlink_manual.html#error-correction">Error Correction: Reed-Solomon and LDPC</a>;
+<a class="xman" href="mlink_manual.html#emergency-modem">The Emergency Modem: NB8FSK</a>; <a class="xman" href="mlink_manual.html#announce-modem">The Announce Modem: QPSK</a>;
+<a class="xman" href="mlink_manual.html#bulk-ofdm">The Bulk Modem: OFDM</a>.</p>
 
 </section>
 <section class="chapter" id="sending"><header class="chapter-head"><span class="chapno">Chapter 5</span><h1>How a message is sent</h1></header>
@@ -479,9 +528,9 @@ of the message and from how well the other station has been hearing you.</p>
 <table>
 <thead><tr><th>Size after compression</th><th>Sent as</th><th>Air time</th></tr></thead>
 <tbody>
-<tr><td>Up to 156 bytes</td><td>A <strong>shortburst</strong>: up to 16 announce frames in a row</td><td>2 to 12&nbsp;s</td></tr>
-<tr><td>157 to 601 bytes, weak path</td><td>A <strong>longburst</strong>: two to four shortbursts, each acknowledged</td><td>15 to 47&nbsp;s</td></tr>
-<tr><td>100 bytes and up, good path</td><td>A <strong>bulk transfer</strong>: up to 10 bulk frames per transmission, 64 in all</td><td>7&nbsp;s for one frame, 56&nbsp;s for ten</td></tr>
+<tr><td>Up to 156 bytes</td><td>A <strong><a class="xman" href="mlink_manual.html#message-sizes--shortburst">shortburst</a></strong>: up to 16 announce frames in a row</td><td>2 to 12&nbsp;s</td></tr>
+<tr><td>157 to 601 bytes, weak path</td><td>A <strong><a class="xman" href="mlink_manual.html#message-sizes--longburst">longburst</a></strong>: two to four shortbursts, each acknowledged</td><td>15 to 47&nbsp;s</td></tr>
+<tr><td>100 bytes and up, good path</td><td>A <strong><a class="xman" href="mlink_manual.html#message-sizes--bulk">bulk transfer</a></strong>: up to 10 bulk frames per transmission, 64 in all</td><td>7&nbsp;s for one frame, 56&nbsp;s for ten</td></tr>
 </tbody>
 </table>
 
@@ -495,14 +544,15 @@ compression; a broadcast to everyone is limited to about 6,000.</p>
 reserved the part of the passband it needs, and its receiver hears nothing.
 Then it waits a short random time, so stations that were all waiting do not
 key together.</li>
-<li>It sends one transmission. The first frame, PRESENCE, is the station's
-callsign and grid square, which is also its identification. The next says
-what follows and for whom. Then come the data frames.</li>
+<li>It sends one transmission. The first frame,
+<a class="xman" href="mlink_manual.html#transmission-unit--presence-first">PRESENCE</a>, is
+the station's callsign and grid square, which is also its identification.
+The next says what follows and for whom. Then come the data frames.</li>
 <li>Stations that hear the opening stay off that part of the passband until
 the transfer is over.</li>
 <li>The recipient replies about two thirds of a second after the
-transmission ends: an acknowledgment if everything arrived, or a map of
-which frames did not.</li>
+transmission ends: an acknowledgment if everything arrived, or
+<a class="xman" href="mlink_manual.html#reliable-delivery--dnak">a map of which frames did not</a>.</li>
 <li>The sender repeats only the missing frames. A fade that destroys one
 frame in ten costs one frame, not the transfer.</li>
 </ol>
@@ -511,8 +561,8 @@ frame in ten costs one frame, not the transfer.</li>
 question, "did you get that?", and if that is not answered either it looks
 for a relay (<a class="xref" href="#relay">Chapter 7</a>).</p>
 
-<p class="more">Full manual: "Mail in mLink", "Message sizes", "Reliable
-delivery".</p>
+<p class="more">Full manual: <a class="xman" href="mlink_manual.html#one-message-journey">Mail in mLink</a>;
+<a class="xman" href="mlink_manual.html#message-sizes">Three Sizes of Message</a>; <a class="xman" href="mlink_manual.html#reliable-delivery">Getting Every Byte There</a>.</p>
 
 </section>
 <section class="chapter" id="concurrency"><header class="chapter-head"><span class="chapno">Chapter 6</span><h1>Several conversations at once</h1></header>
@@ -522,30 +572,42 @@ mLink divides the channel, so stations that are not talking to each other do
 not have to wait for each other.</p>
 
 <figure id="passband-regions--fig-sum">
-<svg viewBox="0 0 640 250" role="img" aria-label="Time-frequency sketch of one listener's audio. Station A sends two opening frames on the bulk-control channel at 2250 Hz, then a bulk burst at 1594 to 2906 Hz. Station B sends a long distress call at 150 Hz through the same time. Station C sends two announce frames at 400 Hz, and station D two at 800 Hz. All overlap in time and are separated by frequency.">
+<svg viewBox="0 0 640 280" role="img" aria-label="Time-frequency sketch of one listener's audio. Station A sends two opening frames on the bulk-control channel at 2250 Hz, then a bulk burst at 1594 to 2906 Hz. Station B sends a long distress call at 150 Hz through the same time. Station D sends two announce frames at 800 Hz, station C two at 400 Hz, and station E two at 1200 Hz at the same moment as C. Later, station C sends again, this time at 1200 Hz. All overlap in time and are separated by frequency.">
 <!-- axes -->
-<line x1="70" y1="200" x2="620" y2="200" style="stroke:var(--ink)" stroke-width="1.5"/>
-<line x1="70" y1="200" x2="70" y2="20" style="stroke:var(--ink)" stroke-width="1.5"/>
-<text x="345" y="236" font-size="12" text-anchor="middle" style="fill:var(--ink)">time →</text>
+<line x1="70" y1="230" x2="620" y2="230" style="stroke:var(--ink)" stroke-width="1.5"/>
+<line x1="70" y1="230" x2="70" y2="20" style="stroke:var(--ink)" stroke-width="1.5"/>
+<text x="345" y="266" font-size="12" text-anchor="middle" style="fill:var(--ink)">time →</text>
 <g font-size="11" text-anchor="end" style="fill:var(--ink)">
-<text x="64" y="194">150</text><text x="64" y="163">400</text><text x="64" y="133">800</text>
-<text x="64" y="104">1500</text><text x="64" y="71">2250</text><text x="64" y="30">3000 Hz</text>
+<text x="64" y="224">150</text><text x="64" y="194">400</text><text x="64" y="164">800</text>
+<text x="64" y="134">1200</text><text x="64" y="104">1500</text><text x="64" y="71">2250</text><text x="64" y="30">3000 Hz</text>
 </g>
 <!-- station B: emergency strip -->
-<rect x="90" y="186" width="510" height="10" style="fill:var(--ink)"/>
-<text x="345" y="215" font-size="11" text-anchor="middle" style="fill:var(--ink)">station B: distress call, 150 Hz</text>
+<rect x="90" y="216" width="510" height="10" style="fill:var(--ink)"/>
+<text x="345" y="245" font-size="11" text-anchor="middle" style="fill:var(--ink)">station B: distress call, 150 Hz</text>
 <!-- station C: announce frames at 400 -->
 <g style="fill:none;stroke:var(--ink)" stroke-width="1.2">
-<rect x="300" y="152" width="62" height="16"/>
-<rect x="366" y="152" width="62" height="16"/>
+<rect x="300" y="182" width="62" height="16"/>
+<rect x="366" y="182" width="62" height="16"/>
 </g>
-<text x="364" y="146" font-size="11" text-anchor="middle" style="fill:var(--ink)">station C</text>
+<text x="364" y="176" font-size="11" text-anchor="middle" style="fill:var(--ink)">station C</text>
 <!-- station D: announce frames at 800 -->
 <g style="fill:none;stroke:var(--ink)" stroke-width="1.2">
-<rect x="130" y="122" width="62" height="16"/>
-<rect x="196" y="122" width="62" height="16"/>
+<rect x="130" y="152" width="62" height="16"/>
+<rect x="196" y="152" width="62" height="16"/>
 </g>
-<text x="194" y="116" font-size="11" text-anchor="middle" style="fill:var(--ink)">station D</text>
+<text x="194" y="146" font-size="11" text-anchor="middle" style="fill:var(--ink)">station D</text>
+<!-- station E: announce frames at 1200, at the same moment as C -->
+<g style="fill:none;stroke:var(--ink)" stroke-width="1.2">
+<rect x="318" y="122" width="62" height="16"/>
+<rect x="384" y="122" width="62" height="16"/>
+</g>
+<text x="382" y="116" font-size="11" text-anchor="middle" style="fill:var(--ink)">station E</text>
+<!-- station C again, later, on a different channel -->
+<g style="fill:none;stroke:var(--ink)" stroke-width="1.2" stroke-dasharray="4,2">
+<rect x="480" y="122" width="62" height="16"/>
+<rect x="546" y="122" width="62" height="16"/>
+</g>
+<text x="544" y="116" font-size="11" text-anchor="middle" style="fill:var(--ink)">station C, next message</text>
 <!-- station A: opener on the bulk-control channel at 2250, then bulk -->
 <g style="fill:var(--accent-soft);stroke:var(--accent)" stroke-width="1.2">
 <rect x="110" y="59" width="62" height="16"/>
@@ -556,42 +618,51 @@ not have to wait for each other.</p>
 <text x="174" y="52" font-size="11" text-anchor="middle" style="fill:var(--ink)">station A: presence, opener</text>
 <line x1="70" y1="104" x2="620" y2="104" style="stroke:var(--muted)" stroke-dasharray="3,3"/>
 </svg>
-<figcaption><span class="figno">Figure 6.1.</span> Three stations transmitting at the same moment in different strips. A receiver hears the sum and decodes each one.</figcaption>
+<figcaption><span class="figno">Figure 6.1.</span> Five stations transmitting in different strips. Two are on different announce channels at the same moment, and one comes back later on another channel. A receiver hears the sum and decodes each one.</figcaption>
 </figure>
 
 <ul>
-<li><strong>Five places to transmit.</strong> Three announce channels, the
-bulk strip and the emergency strip. A bulk transfer between two stations can
-run in the top of the passband while other stations exchange short messages
-on the announce channels and a distress call goes out underneath.</li>
+<li><strong><a class="xman" href="mlink_manual.html#sharing-the-channel--pieces">Five places to transmit.</a></strong>
+Three announce channels, the bulk strip and the emergency strip. A bulk
+transfer between two stations can run in the top of the passband while
+stations that are not following it exchange short messages on the announce
+channels and a distress call goes out underneath.</li>
 <li><strong>Every receiver decodes all of it, all the time.</strong> A
 station is never tuned to one conversation. It hears every frame in every
 strip, which is how it knows who is on the frequency, how strong they are
 and what has been sent.</li>
-<li><strong>Reservations cover one strip.</strong> The opening of a transfer
-reserves only the announce channel or the bulk strip it will use, for only
-as long as the transfer can last. The other strips stay free.</li>
-<li><strong>A new message picks any free announce channel at random,</strong>
+<li><strong><a class="xman" href="mlink_manual.html#sharing-the-channel--per-resource">Reservations cover one strip.</a></strong>
+The opening of a transfer reserves only the announce channel or the bulk
+strip it will use, for only as long as the transfer can last. The other
+strips stay free.</li>
+<li><strong><a class="xman" href="mlink_manual.html#sharing-the-channel--picking">A new message picks any free announce channel at random,</a></strong>
 so two stations that start at the same moment usually land on different
-channels and both get through.</li>
-<li><strong>Listen before transmitting.</strong> A station does not key
-while its receiver hears a signal, and after the frequency goes quiet it
-waits a random time that grows with the number of stations it has heard.</li>
-<li><strong>Order of precedence:</strong> distress traffic, replies that are
-owed, the exchange already under way, new messages, then automatic traffic
-such as beacons.</li>
+channels and both get through. A station has no favourite channel.</li>
+<li><strong><a class="xman" href="mlink_manual.html#sharing-the-channel--race">Listen before transmitting.</a></strong>
+A station does not start a new message while its receiver hears an mLink
+signal anywhere in the passband, so a station that is decoding somebody
+else's bulk transfer waits for it to end. After the frequency goes quiet it
+waits a random time that grows with the number of stations it has heard.
+Replies that are owed and distress calls do not wait.</li>
+<li><strong><a class="xman" href="mlink_manual.html#sharing-the-channel--priorities">Order of precedence:</a></strong>
+distress traffic, replies that are owed, the exchange already under way,
+new messages, then automatic traffic such as beacons.</li>
 </ul>
 
 <p>One station still transmits one thing at a time and cannot receive while
 it transmits. The gain is across stations: on a busy frequency several
-exchanges proceed side by side. It works: in a simulated net of twelve
-stations running for hours, not one frame was overlapped by another
-station's transmission. Even in a deliberately punishing search-and-rescue
-test, with two bands and many stations that cannot hear one another at all,
-97.8&nbsp;% or more of frames went out in the clear.</p>
+exchanges proceed side by side, between stations that are out of each
+other's hearing or that are not following each other's transfers. How well
+it works is measured on a simulated air. In twelve-station nets running for
+hours, between none and about two frames in a hundred are overlapped by
+another station's transmission, and in a deliberately punishing
+search-and-rescue test on two bands, with many stations that cannot hear
+one another at all, about one in fifty. With 200 stations on one frequency
+about a quarter of all frames overlap another and are sent again, and the
+mail still arrives (<a class="xref" href="#busy-frequency">Chapter 14</a>).</p>
 
-<p class="more">Full manual: "The passband and its regions", "Sharing the
-channel".</p>
+<p class="more">Full manual: <a class="xman" href="mlink_manual.html#sharing-the-channel">Sharing the Channel</a>;
+<a class="xman" href="mlink_manual.html#passband-regions--sum">One audio stream, many signals</a>; <a class="xman" href="mlink_manual.html#testing--operator-sims">Operator simulations</a>.</p>
 
 </section>
 <section class="chapter" id="relay"><header class="chapter-head"><span class="chapno">Chapter 7</span><h1>Automatic relay</h1></header>
@@ -629,37 +700,49 @@ hears both. mLink uses that third station without anyone asking it to.</p>
 
 <ol>
 <li><strong>Every station keeps what it overhears.</strong> A message sent
-to someone else is held for a while by each station that decoded it.</li>
-<li><strong>The sender asks.</strong> When a message gets no reply, the
-sender transmits one short REQUEST naming the recipient and the message. It
-does not send the message again.</li>
-<li><strong>Stations that can help offer.</strong> A station offers only if
-it holds a copy, has heard the recipient in the last two minutes, and has a
-usable path to it. Offers go out in separate time slots so they do not
-collide, and each says how well that station hears the recipient. When many
-stations could help, each works out its own place in line, two answer per slot, and normally only
-the best two answer at all. A station far down the line stays silent and
-moves up each time a request goes unanswered, so that a crowd does not all
-answer at once.</li>
-<li><strong>The sender picks one,</strong> two seconds after the first good
-offer: the station with the best path to the recipient.</li>
-<li><strong>The relay delivers</strong> its copy in a transfer of its own,
-with repairs if needed. The recipient files the message under its original
-author.</li>
-<li><strong>The relay reports back,</strong> and the sender's outbox shows
-the message as sent.</li>
+to someone else is kept by every station that decoded it, for as long as
+the operator leaves it in the database.</li>
+<li><strong><a class="xman" href="mlink_manual.html#relay--request">The sender asks.</a></strong>
+When a message gets no reply, the sender transmits one short REQUEST naming
+the recipient and the message. It does not send the message again.</li>
+<li><strong><a class="xman" href="mlink_manual.html#relay--offer">Stations that can help offer.</a></strong>
+A station offers only if it holds a copy, has heard the recipient in the
+last two minutes, and has a usable path to it. Offers go out in separate
+time slots so they do not collide, and each says how well that station
+hears the recipient. When many stations could help,
+<a class="xman" href="mlink_manual.html#relay--self-rank">each works out its own place in line</a>,
+two answer per slot, and normally only the best two answer at all. A
+station far down the line stays silent and moves up each time a request
+goes unanswered, so that a crowd does not all answer at once.</li>
+<li><strong><a class="xman" href="mlink_manual.html#relay--select">The sender picks one,</a></strong>
+two seconds after the first good offer: the station with the best path to
+the recipient.</li>
+<li><strong><a class="xman" href="mlink_manual.html#relay--for">The relay delivers</a></strong>
+its copy in a transfer of its own, with repairs if needed. The recipient
+files the message under the station that originally sent it, not under
+the relay.</li>
+<li><strong><a class="xman" href="mlink_manual.html#relay--result">The relay reports back,</a></strong>
+and the sender's outbox shows the message as sent.</li>
 </ol>
 
-<p>If nobody offers, the sender keeps the message and tries again when it
-next hears any station, first after one minute and then at gaps that double
-up to 32 minutes. Later requests also invite stations that hear the
-recipient but hold no copy; the sender hands one of them the message.</p>
+<p>If nobody offers, the sender keeps the message and
+<a class="xman" href="mlink_manual.html#relay--seeking">tries again</a> when it next hears
+any station, first after one minute and then at gaps that double up to 32
+minutes. From then on the request also invites a station that hears the
+recipient but did not overhear the message: such a station answers "I can
+reach them but I need the message", and the sender
+<a class="xman" href="mlink_manual.html#relay--nobody-holds">hands it the message</a> in a
+transfer of its own.</p>
 
-<p>No routes are configured and no station is a designated relay. Each
-relay is arranged for one message, from what stations have heard in the
-last few minutes.</p>
+<p>Relay is <a class="xman" href="mlink_manual.html#relay--more">not limited to one hop</a>.
+A relay that cannot reach the recipient after all asks for a relay of its
+own, in the same way, and the message keeps the name of the station that
+originated it. No routes are configured and no station is a designated
+relay. Each hop is arranged for one message, from what stations have heard
+in the last few minutes.</p>
 
-<p class="more">Full manual: "Relay", "Finding each other".</p>
+<p class="more">Full manual: <a class="xman" href="mlink_manual.html#relay">Relay: Recruiting a Helper</a>;
+<a class="xman" href="mlink_manual.html#finding-each-other">Finding Each Other</a>.</p>
 
 </section>
 <section class="chapter" id="mail"><header class="chapter-head"><span class="chapno">Chapter 8</span><h1>Mail</h1></header>
@@ -671,56 +754,72 @@ walk away.</p>
 <h2 id="mail--ways"><span class="secno">8.1</span> How it travels</h2>
 
 <ul>
-<li><strong>By radio, station to station.</strong> Directly to the
-recipient, or through a relay. No internet is involved at either end.</li>
-<li><strong>Through a gateway.</strong> A station with internet access says
-so on the air and becomes a gateway for the stations around it. It puts mail
-it overhears into the recipient's mailbox on the mailserver, and tells the
-sender it has taken it.</li>
+<li><strong><a class="xman" href="mlink_manual.html#mail-over-the-air--direct">By radio, station to station.</a></strong>
+Directly to the recipient, or through a relay. No internet is involved at
+either end.</li>
+<li><strong><a class="xman" href="mlink_manual.html#mail-over-the-air--gateways">Through a gateway.</a></strong>
+A station with internet access says so on the air and becomes a gateway for
+the stations around it. It puts mail it overhears into the recipient's
+mailbox on the mailserver, and tells the sender it has taken it.</li>
 <li><strong>Across frequencies, bands and continents.</strong> Two stations
-do not have to share a frequency. Each needs only a gateway in radio range,
-or internet access of its own: the mail goes by radio to a gateway, over the
-internet to the mailserver, and out by radio from whichever gateway next
-hears the recipient, anywhere in the world.</li>
-<li><strong>To and from ordinary email.</strong> The mailserver passes mail
-between callsign mailboxes and internet email addresses, and runs mailing
-lists.</li>
+do not have to share a frequency. The mail goes by radio to a gateway, over
+the internet to the mailserver, and out by radio from whichever gateway
+next hears the recipient, anywhere in the world.</li>
+<li><strong><a class="xman" href="mlink_manual.html#mail-over-the-air--couriers">Carried toward the internet.</a></strong>
+When no gateway is in range, a station that overheard the mail holds it and
+hands it to the first gateway it meets, or delivers it directly if the
+recipient turns up first. The mailserver does not have to be reachable for
+mail to move.</li>
+<li><strong><a class="xman" href="mlink_manual.html#mailserver--email-out">To and from ordinary email.</a></strong>
+The mailserver passes mail between callsign mailboxes and internet email
+addresses, and runs mailing lists.</li>
 </ul>
 
 <h2 id="mail--receive"><span class="secno">8.2</span> How it arrives</h2>
 
-<p>You do not have to ask. When a gateway hears your station, it looks in
-your mailbox and tells your station what is waiting; your station fetches
-it. Several mails for one station travel together in one transfer.</p>
+<p>You do not have to ask. When a gateway hears your station, it
+<a class="xman" href="mlink_manual.html#mail-over-the-air--volunteer">looks in your mailbox</a>
+and tells your station what is waiting; your station fetches it. Several
+mails for one station travel together in one transfer. Where many gateways
+hear the same station they take turns, each looking at most once every
+fifteen minutes and standing down when it hears another has already
+answered. A station that no gateway can hear directly can
+<a class="xman" href="mlink_manual.html#mail-over-the-air--mailctl">ask through a relay</a>.</p>
 
 <h2 id="mail--rules"><span class="secno">8.3</span> What to know</h2>
 
 <ul>
 <li><strong>Mail never expires.</strong> A mail that cannot be delivered now
-waits, at your station or in the mailbox, until its recipient turns up.</li>
-<li><strong>One station is responsible for a mail at a time.</strong> A
-gateway claims a mail only after the mailserver has confirmed it holds it,
-and other stations carrying the same mail then stop.</li>
-<li><strong>A mail fits one transfer:</strong> about 64,000 bytes compressed
-to one station.</li>
+waits, at your station or in the mailbox, until its recipient turns up.
+The mailserver keeps a delivered mail too, marked as fetched; nothing is
+deleted unless its operator sets a retention period.</li>
+<li><strong><a class="xman" href="mlink_manual.html#mail-over-the-air--custody-rule">One station is responsible for a mail at a time.</a></strong>
+A gateway claims a mail only after the mailserver has confirmed it holds
+it, and other stations carrying the same mail then stop.</li>
+<li><strong>Who wrote it.</strong> A mail names the station that sent it,
+and can also carry the operator who wrote it and the position they were
+working, for a station with several operators.</li>
 <li><strong>The mailserver is what makes delivery dependable.</strong> It is
 where mail waits, and every gateway reaches it. Stations with no internet in
 reach still exchange mail by radio alone; that is a feature for when the
 internet is gone, not the usual path.</li>
-<li><strong>Nothing secret is sent by radio.</strong> A station proves who
-it is to the mailserver without transmitting a password.</li>
-<li><strong>Encrypted mail skips the mailserver.</strong> For services
-whose rules allow encryption, an encrypted mail goes over the air to its
-addressees only. No gateway deposits it and no station carries it, so nothing
-holds it for a station that is off the air. That is today's limit: help from the
-mailserver and from stations that cannot read the mail is planned, not built.</li>
+<li><strong><a class="xman" href="mlink_manual.html#mailserver--accounts">Nothing secret is sent by radio.</a></strong>
+A station proves who it is to the mailserver without transmitting a
+password.</li>
+<li><strong><a class="xman" href="mlink_manual.html#mailserver--encrypted">Encrypted mail skips the mailserver.</a></strong>
+For services whose rules allow encryption, an encrypted mail goes over the
+air to its addressees only. No gateway deposits it and no station carries
+it, so nothing holds it for a station that is off the air. That is today's
+limit: help from the mailserver and from stations that cannot read the mail
+is planned, not built.</li>
 <li><strong>The mailserver is an early version.</strong> Today it is one
-server with no management tools beyond ordinary SQLite database tools.
-Stronger security, spreading mailboxes over several servers, automatic
-duplication and management tools are planned, not yet built.</li>
+server managed with ordinary SQLite tools. Stronger security, several
+servers, automatic duplication and management tools are planned, not yet
+built.</li>
 </ul>
 
-<p class="more">Full manual: "Mail over the air", "The mailserver".</p>
+<p class="more">Full manual: <a class="xman" href="mlink_manual.html#mail-over-the-air">Mail Over the Air</a>;
+<a class="xman" href="mlink_manual.html#mailserver">The Mailserver</a>.</p>
 
 </section>
 <section class="chapter" id="nets"><header class="chapter-head"><span class="chapno">Chapter 9</span><h1>Named nets</h1></header>
@@ -731,34 +830,38 @@ stations join. Stations that do not join carry on as before on the same
 frequency.</p>
 
 <ul>
-<li><strong>Owner and net control.</strong> The net belongs to the station
-that opened it. Net control runs it. They are usually the same station, and
-the owner can hand net control to another member.</li>
-<li><strong>Roster.</strong> Up to 127 members, numbered in the order they
-joined. Net control repeats the roster a few entries at a time, so a station
-that arrives late learns it by listening.</li>
-<li><strong>Roll call.</strong> Net control sends one frame. Each member
-answers in its own 1.2-second slot with a single frame, in roster order,
-with no prompting. Twelve stations take about 21 seconds. A member that
-missed its slot gets a second try, and a member can vouch for one it
-hears that net control does not.</li>
-<li><strong>Bulletins.</strong> Up to 200 characters to every member,
-followed by a roll that shows who received it, and one repeat for those who
-did not.</li>
-<li><strong>Standing orders.</strong> One longer text that every member
-keeps. A member that does not have the current copy asks for it.</li>
-<li><strong>If net control goes quiet,</strong> a member takes over as a
-stand-in after three and a half cycles of silence, and the owner gets the
-net back when it returns.</li>
-<li><strong>During a roll call</strong> members hold their routine traffic,
-and stations outside the net keep off that one announce channel. The other
-channels and the bulk strip stay in use.</li>
+<li><strong><a class="xman" href="mlink_manual.html#virtual-nets--roles">Owner and net control.</a></strong>
+The net belongs to the station that opened it. Net control runs it. They
+are usually the same station, and the owner can hand net control to
+another member.</li>
+<li><strong><a class="xman" href="mlink_manual.html#virtual-nets--roster">Roster.</a></strong>
+Up to 127 members, numbered in the order they joined. Net control repeats
+the roster a few entries at a time, so a station that arrives late learns
+it by listening.</li>
+<li><strong><a class="xman" href="mlink_manual.html#virtual-nets--roll-call">Roll call.</a></strong>
+Net control sends one frame. Each member answers in its own 1.2-second slot
+with a single frame, in roster order, with no prompting. Twelve stations
+take about 21 seconds. A member that missed its slot gets a second try, and
+a member can vouch for one it hears that net control does not.</li>
+<li><strong><a class="xman" href="mlink_manual.html#virtual-nets--bulletin">Bulletins.</a></strong>
+Up to 200 characters to every member, followed by a roll that shows who
+received it, and one repeat for those who did not.</li>
+<li><strong><a class="xman" href="mlink_manual.html#virtual-nets--standing-orders">Standing orders.</a></strong>
+One longer text that every member keeps. A member that does not have the
+current copy asks for it.</li>
+<li><strong><a class="xman" href="mlink_manual.html#virtual-nets--succession">If net control goes quiet,</a></strong>
+a member takes over as a stand-in after three and a half cycles of silence,
+and the owner gets the net back when it returns.</li>
+<li><strong><a class="xman" href="mlink_manual.html#virtual-nets--hold">During a roll call</a></strong>
+members hold their routine traffic, and stations outside the net keep off
+that one announce channel. The other channels and the bulk strip stay in
+use.</li>
 </ul>
 
 <p>A net is a layer of organisation, not a requirement. Messages, mail,
 relay and distress calls work the same with or without one.</p>
 
-<p class="more">Full manual: "Named nets".</p>
+<p class="more">Full manual: <a class="xman" href="mlink_manual.html#virtual-nets">Virtual Nets</a>.</p>
 
 </section>
 <section class="chapter" id="emergency"><header class="chapter-head"><span class="chapno">Chapter 10</span><h1>Distress calls</h1></header>
@@ -768,39 +871,53 @@ listening for one. The call has its own strip at the bottom of the passband
 and its own modem, built to be heard when nothing else can be.</p>
 
 <ul>
-<li><strong>It reaches deepest.</strong> A distress call decodes at
-&minus;17&nbsp;dB, 12&nbsp;dB below any other mLink signal, and well below
-what you can see on a waterfall.</li>
-<li><strong>It is slow on purpose.</strong> One frame takes 10.24 seconds and
-carries 11 bytes. The first frame alone is a complete alert. Up to 14 more
-add who is calling and what is wrong, 13 characters each.</li>
-<li><strong>It repeats.</strong> A call goes out again about every 75 to 90
-seconds until someone acknowledges it or the operator cancels it. It
-survives a restart of the station software.</li>
+<li><strong><a class="xman" href="mlink_manual.html#emergency-modem--repetition">It reaches deepest.</a></strong>
+A single frame decodes at &minus;15&nbsp;dB, and because the call repeats
+it gets through at &minus;17, 12&nbsp;dB below any other mLink signal and
+well below what you can see on a waterfall.</li>
+<li><strong><a class="xman" href="mlink_manual.html#emergency--frame-zero">It is slow on purpose.</a></strong>
+One frame takes 10.24 seconds and carries 11 bytes. The first frame alone
+is a complete alert: a position, how sure it is, what kind of trouble, how
+bad, how many people. Up to 14 more frames add who is calling and what is
+happening, 13 characters each.</li>
+<li><strong><a class="xman" href="mlink_manual.html#emergency--timing">It repeats.</a></strong>
+A call goes out again about every 75 to 90 seconds until someone
+acknowledges it or the operator cancels it. It survives a restart of the
+station software.</li>
 <li><strong>It leaves room for an answer.</strong> After each pass the
 calling station listens for at least 15 seconds.</li>
-<li><strong>It does not wait for anyone.</strong> Distress traffic ignores
-reservations, and sending a call cuts off whatever else the station was
-transmitting; that message is kept in Drafts. No setting, password or
-missing field can stop a call being sent. An empty call is still a valid
-call.</li>
+<li><strong><a class="xman" href="mlink_manual.html#emergency--rule">It does not wait for anyone.</a></strong>
+Distress traffic ignores reservations, and sending a call cuts off whatever
+else the station was transmitting; that message is kept in Drafts. No
+setting, password or missing field can stop a call being sent. An empty
+call is still a valid call.</li>
 </ul>
 
 <h2 id="emergency--heard"><span class="secno">10.1</span> When a station hears one</h2>
 
 <ul>
 <li>It alerts its operator.</li>
-<li>It repeats the call in the announce strip after a short random wait, and
-stands down if another station does so first.</li>
+<li>It <a class="xman" href="mlink_manual.html#emergency--relay">repeats the call</a> in the
+announce strip after a short random wait, and stands down if another
+station does so first.</li>
 <li>A gateway puts the call in a mailbox watched for distress calls, so a
 person with a telephone can act on it.</li>
-<li>An operator can acknowledge it. The acknowledgment goes out twice: with
-contact details in the announce strip, and as one frame in the emergency
-strip, timed for the moment the caller starts listening, so the answer
-reaches as deep as the call did.</li>
+<li>An operator can <a class="xman" href="mlink_manual.html#emergency--ack">acknowledge it</a>.
+The acknowledgment goes out twice: with contact details in the announce
+strip, and as one frame in the emergency strip, timed for the moment the
+caller starts listening, so the answer reaches as deep as the call did.</li>
 </ul>
 
-<p class="more">Full manual: "The emergency modem", "Emergency".</p>
+<p>The distress modem exists to raise the alarm, not to hold a
+conversation. Once a call is acknowledged the repeats stop, and the caller
+and the station that answered
+<a class="xman" href="mlink_manual.html#emergency--two-way">talk as any two stations do</a>,
+with ordinary messages and mail, through relays and gateways like everything
+else. That is where the details get sorted out and where a rescue can be
+called off if it is not needed.</p>
+
+<p class="more">Full manual: <a class="xman" href="mlink_manual.html#emergency-modem">The Emergency Modem: NB8FSK</a>;
+<a class="xman" href="mlink_manual.html#emergency">Emergency: The SOS Service</a>.</p>
 
 </section>
 <section class="chapter" id="clusters"><header class="chapter-head"><span class="chapno">Chapter 11</span><h1>Clusters: one station, several radios</h1></header>
@@ -863,76 +980,88 @@ one callsign and behaves as one station.</p>
 </figure>
 
 <ul>
-<li><strong>The link between members is a network,</strong> a LAN or the
-internet. It is never the radio. Up to 16 members.</li>
-<li><strong>Everything heard is shared.</strong> A station heard on 40&nbsp;m
-by one member appears in the station list of every member, with the band it
-was heard on.</li>
-<li><strong>Traffic crosses bands.</strong> A message for a station that
-only the 80&nbsp;m member hears is carried over the link and sent from the
-80&nbsp;m radio.</li>
+<li><strong><a class="xman" href="mlink_manual.html#clusters--cluster">The link between members is a network,</a></strong>
+a LAN or the internet. It is never the radio. Up to 16 members.</li>
+<li><strong><a class="xman" href="mlink_manual.html#clusters--journal">Everything heard is shared.</a></strong>
+A station heard on 40&nbsp;m by one member appears in the station list of
+every member, with the band it was heard on.</li>
+<li><strong><a class="xman" href="mlink_manual.html#clusters--cross-band">Traffic crosses bands.</a></strong>
+A message for a station that only the 80&nbsp;m member hears is carried
+over the link and sent from the 80&nbsp;m radio.</li>
 <li><strong>One operator view.</strong> An operator's client connects to any
 member and works the whole station. Accounts, passwords and the mail
 identity are the same everywhere.</li>
-<li><strong>Mail is protected against losing a member.</strong> A member
-with internet access holds a copy of the others' unsent mail and takes it
-over if its owner has been silent for three minutes.</li>
+<li><strong><a class="xman" href="mlink_manual.html#clusters--adoption">Mail is protected against losing a member.</a></strong>
+A member with internet access holds a copy of the others' unsent mail and
+takes it over if its owner has been silent for three minutes.</li>
 <li><strong>Each radio still decides for itself.</strong> When to transmit
 on a band is decided only from what that band's radio hears.</li>
 </ul>
 
-<p>Joining takes a label, the address of one existing member, and approval
-by an administrator who compares two key fingerprints.</p>
+<p><a class="xman" href="mlink_manual.html#clusters--joining">Joining</a> takes a label, the
+address of one existing member, and approval by an administrator who
+compares two key fingerprints.</p>
 
-<p class="more">Full manual: "Clusters".</p>
+<p class="more">Full manual: <a class="xman" href="mlink_manual.html#clusters">Clusters: One Station, Several Radios</a>.</p>
 
 </section>
 <section class="chapter" id="more"><header class="chapter-head"><span class="chapno">Chapter 12</span><h1>Also built in</h1></header>
 
 <h2 id="more--finding"><span class="secno">12.1</span> Stations find each other</h2>
-<p>A new station listens for ten minutes before it sends anything. If it
-hears other stations it joins in; if it hears nobody it asks whether anyone
-can hear it. After that it sends a short beacon now and then, less often on
-a crowded frequency. Every station keeps a list of who it has heard and how
-strongly, and stations pass each other short notes about who hears whom,
+<p>A new station <a class="xman" href="mlink_manual.html#finding-each-other--convergence">listens
+for ten minutes</a> before it identifies itself on its own. If it hears
+other stations it joins in; if it hears nobody it asks whether anyone can
+hear it. After that it sends a short beacon now and then, less often on a
+crowded frequency. A message you send goes out as soon as the air is clear,
+listening period or not. Every station keeps a list of who it has heard and
+how strongly, and stations pass each other
+<a class="xman" href="mlink_manual.html#finding-each-other--hello">short notes about who hears whom</a>,
 which builds a map of the links on the frequency.</p>
 
 <h2 id="more--maps"><span class="secno">12.2</span> Position and maps</h2>
 <p>Every station is placed on a world map from its grid square, or exactly
-with a GPS. Stations can send position reports that leave a trail, and
-operators can share map objects such as search areas and routes. A message
-can be addressed to "any station in this area".</p>
+with a GPS. Stations can send
+<a class="xman" href="mlink_manual.html#position-and-maps--aprs">position reports</a> that
+leave a trail, and operators can share
+<a class="xman" href="mlink_manual.html#position-and-maps--overlay">map objects</a> such as
+search areas and routes. A message can be addressed to "any station in this
+area".</p>
 
 <h2 id="more--internet"><span class="secno">12.3</span> Internet data over the air</h2>
-<p>A station without internet can ask for data such as a weather report. A
-station with internet fetches it and sends back a compact answer.</p>
+<p>A station without internet can <a class="xman" href="mlink_manual.html#internet-sources">ask
+for data</a> such as a weather report. A station with internet fetches it
+and sends back a compact answer.</p>
 
 <h2 id="more--operators"><span class="secno">12.4</span> Operators and roles</h2>
 <p>Several operators can work one station at once, each with an account.
-Three roles (operator, technician, administrator) decide who may change the
-station's settings. Sending a distress call is never restricted.</p>
+<a class="xman" href="mlink_manual.html#accounts-and-roles--roles">Three roles</a> (operator,
+technician, administrator) decide who may change the station's settings.
+Sending a distress call is never restricted.</p>
 
 <h2 id="more--security"><span class="secno">12.5</span> Identity and encryption</h2>
-<p>mLink encrypts with AES-256-GCM. Two stations that each hold a
-signed certificate agree a key without sending
-anything secret, or a group shares one key in advance. A message is
-compressed first and then sealed. Encryption is for services whose rules
-allow it, such as MARS and SHARES; amateur rules forbid hiding what a
-message says, so it stays off there unless keys are loaded and it is asked
-for per message. Separately, and on every service, a mail carries a short
-proof of its author that the mailserver checks. Distress calls are never
-encrypted.</p>
+<p>mLink <a class="xman" href="mlink_manual.html#security--encryption">encrypts</a> with
+AES-256-GCM. Two stations that each hold a certificate signed by the mLink
+certificate authority agree a key without sending anything secret, or a
+group shares one key in advance. A message is compressed first and then
+sealed. Encryption is for services whose rules allow it, such as MARS and
+SHARES. Amateur rules forbid hiding what a message says, and mLink does not
+know what frequency it is on, so it is the operator who keeps it off there:
+nothing is encrypted unless keys have been loaded and the operator asks for
+it on that message. Separately, and on every service, a mail carries a
+short proof of its author that the mailserver checks. Distress calls are
+never encrypted.</p>
 
 <h2 id="more--fm"><span class="secno">12.6</span> FM</h2>
-<p>FmLink is mLink for FM voice radios and repeaters. It works today and
-has been run on the air between two inexpensive handhelds keyed by VOX, the
-slowest way a radio can be keyed. Radios the computer controls directly
-will run a faster tier, and that is where the work is going. The cheap
-handheld is supported because so many people own one, not because it is a
-good way to run mLink.</p>
+<p><a class="xman" href="mlink_manual.html#fmlink">FmLink</a> is mLink for FM voice radios
+and repeaters. It works today and has been run on the air between two
+inexpensive handhelds keyed by VOX, the slowest way a radio can be keyed.
+Radios the computer controls directly will run a faster tier, and that is
+where the work is going. The cheap handheld is supported because so many
+people own one, not because it is a good way to run mLink.</p>
 
-<p class="more">Full manual: "Finding each other", "Position and maps",
-"Internet sources", "Accounts and roles", "Security".</p>
+<p class="more">Full manual: <a class="xman" href="mlink_manual.html#finding-each-other">Finding Each Other</a>;
+<a class="xman" href="mlink_manual.html#position-and-maps">Position, Maps and Tactical Overlays</a>; <a class="xman" href="mlink_manual.html#internet-sources">Sharing the Internet Over the Air</a>;
+<a class="xman" href="mlink_manual.html#accounts-and-roles">Accounts, Roles and Shared Stations</a>; <a class="xman" href="mlink_manual.html#security">Security Under Part 97</a>.</p>
 
 </section>
 <section class="chapter" id="getting-started"><header class="chapter-head"><span class="chapno">Chapter 13</span><h1>Getting on the air</h1></header>
@@ -941,69 +1070,81 @@ good way to run mLink.</p>
 <ul>
 <li><strong>An SSB transceiver</strong> of the kind used for FT8 or JS8,
 with filters that pass audio from about 115 to 2,900&nbsp;Hz.</li>
-<li><strong>A sound interface</strong> between the radio and the computer:
-a SignaLink-type or Digirig-type box, or a radio with a sound card built
-in.</li>
-<li><strong>A way to key the transmitter:</strong> a serial control line,
-the radio's CAT control, or VOX. The first two are faster.</li>
+<li><strong>A sound interface</strong> between the radio and the computer
+that also keys the radio: a Digirig or SignaLink-type box with a PTT line,
+or a radio with a sound card built in, where one USB cable does both jobs.
+This is the hardware mLink is built for. mLink can key by VOX, but on HF
+VOX adds a long and uncertain delay before every transmission, so it is
+not recommended and may be dropped. Older gear that needs a lot of fiddling
+to key properly is not a target.</li>
 <li><strong>A Linux computer</strong> for the station daemon. The client
 runs on Linux, on Windows and in any web browser, and can be on another
 machine.</li>
 </ul>
 
-<h2 id="getting-started--steps"><span class="secno">13.2</span> First steps</h2>
-<ol>
-<li>Download the package, one file that holds the daemon, the client and
-the web client, and run it. It opens the client:
-<pre><code>chmod +x mLink-x86_64.AppImage
-./mLink-x86_64.AppImage</code></pre></li>
-<li>In the client, enter your callsign and grid square, choose the sound
-device and the keying method, and set the transmit audio level so the radio
-shows no ALC action.</li>
-<li>Tune to a frequency where mLink stations are active. Your station
-listens for ten minutes before it transmits by itself.</li>
-<li>Open the Stations window to see who you hear. Open Messages, write to
-one of them, and press Send.</li>
-</ol>
+<h2 id="getting-started--steps"><span class="secno">13.2</span> Installing and running mLink</h2>
+<p>mLink is not yet available for distribution. It is still being built and
+tested, and there is no package or source release to download. When there
+is, this page will say how to install it and get a first station on the
+air; until then the full manual's
+<a class="xman" href="mlink_manual.html#installing">Installing and First Run</a> chapter describes how that will
+work.</p>
 
 <h2 id="getting-started--expect"><span class="secno">13.3</span> What to expect</h2>
 <ul>
 <li>A sent message may sit in the outbox for a few seconds, sometimes a
-minute, while the station waits for a free moment.</li>
+minute, while the station waits for a free moment. A new station listens
+for ten minutes before it identifies itself on its own, but a message you
+send goes out as soon as the air is clear.</li>
 <li><em>Deferred</em> means the station still has the message and will try
-again. <em>Failed</em> means it has stopped, and says why.</li>
+again. <em>Failed</em> means it has stopped, and says why. The
+<a class="xman" href="mlink_manual.html#outbox-and-waiting--states">outbox states</a> are
+all explained in the manual.</li>
+<li>Before you switch off, look at the outbox count in the status panel:
+pending or airing means the station still has work to do.</li>
+<li>If you change frequency on a radio mLink does not control, give the
+station a few minutes to hear what is on the new one. The Stations list
+shows who has been heard in the last five minutes, so an empty list after
+that is a fair sign the band is dead or the frequency is wrong.</li>
 <li>Your station also works for others: it relays, repeats distress calls
 and, with internet access, carries mail. You can limit this in the
 settings.</li>
 <li>You can close the client. The station keeps running.</li>
 </ul>
 
-<p class="more">Full manual: "Installing", "Operator guide", "Outbox and
-waiting".</p>
+<p class="more">Full manual: <a class="xman" href="mlink_manual.html#installing">Installing and First Run</a>;
+<a class="xman" href="mlink_manual.html#operator-guide">The Operator's Guide to the Client</a>; <a class="xman" href="mlink_manual.html#outbox-and-waiting">The Outbox, and Why Your Station Waits</a>.</p>
 
 </section>
 <section class="chapter" id="busy-frequency"><header class="chapter-head"><span class="chapno">Chapter 14</span><h1>How demanding is it?</h1></header>
 
-<p>mLink makes heavy use of simulated airtime with real mLink stations using 
-a shared audio baseband, with applied per-station handicaps (some are deaf,
-others have fading with other stations) in various configurations.</p> 
-  
-<p>The most demanding simulation is a 20m frequency with 200 mLink
-stations on it, over the course of 6 hours, several concurrent events
-going on at the same time. A search-and-rescue net looking for a lost vessel,
-a casual evening net, several normal QSOs, and a few distruptive stations
-constantly calling CQ. The intent behind the simulation is to ensure that
-the protocol can guaranteee a Safety-Critical net can still perform well, despite
-competing traffic. </p>
+<p>mLink makes heavy use of simulated air time, with real mLink stations
+sharing one audio baseband and each station given its own handicaps: some
+are deaf to certain others, some fade in and out, in all sorts of
+configurations. The stations are the real program; only the sound card is
+fake.</p>
 
-<p>Currently, the simulation performs "remarkably well" with most messages and mail
-delivered, despite the interference.</p>
+<p>The most demanding simulation so far is a 20&nbsp;m frequency with 200
+mLink stations on it for six hours, with several things going on at once: a
+search-and-rescue net looking for a lost vessel, a casual evening net,
+plenty of ordinary QSOs, and a few disruptive stations constantly calling
+CQ. The intent is to make sure that a safety-critical net can still perform
+well despite everything else competing for the frequency.</p>
 
-<p>The full manual's appendix "A Busy Frequency" has every current figure, current weaknesses,
-and what the test does not show. This sim is an active area of
-protocol improvement. A design goal is for mLink to be able to scale to
-256 concurrent stations on a single frequency while maintaining excellent
-delivery metrics and airtime performance.</p>
+<p>So far it performs remarkably well, with most messages and mail
+delivered despite the interference, and the simulation is where most
+protocol improvement now comes from. The design goal is for mLink to scale
+to 256 stations on a single frequency while keeping excellent delivery and
+air-time figures.</p>
+
+<p>On the computer side it is light: a station on that busy frequency used
+about 3&nbsp;% of one processor core and 50&nbsp;MB of memory, before the
+sound card, rig control and the client.</p>
+
+<p class="more">The full manual's appendix
+<a class="xman" href="mlink_manual.html#big-sim">A Busy Frequency: the 200-Station Simulation</a> has every current figure, the current
+weak spots and their causes, and what the test does not show;
+<a class="xman" href="mlink_manual.html#testing">How We Know It Works</a> explains the simulated air itself.</p>
 
 </section>
 <section class="chapter" id="numbers"><header class="chapter-head"><span class="chapno">Chapter 15</span><h1>Numbers at a glance</h1></header>
@@ -1012,31 +1153,34 @@ delivery metrics and airtime performance.</p>
 <thead><tr><th>Item</th><th>Value</th></tr></thead>
 <tbody>
 <tr><td>Channel</td><td>One SSB channel; signals occupy 115 to 2,906&nbsp;Hz of audio</td></tr>
-<tr><td>Emergency strip</td><td>125&ndash;175&nbsp;Hz; 8-FSK; 10.24&nbsp;s per frame; decodes to &minus;17&nbsp;dB</td></tr>
-<tr><td>Announce channels</td><td>400, 800 and 1,200&nbsp;Hz; QPSK; 0.64&nbsp;s per frame; decodes to &minus;5&nbsp;dB</td></tr>
-<tr><td>Bulk strip</td><td>1,500&ndash;3,000&nbsp;Hz; OFDM, 28 carriers; 5.44&nbsp;s per frame; from about +3&nbsp;dB</td></tr>
+<tr><td>Emergency strip</td><td>125&ndash;175&nbsp;Hz; 8-FSK at 6.25 baud; 10.24&nbsp;s per frame; one frame decodes to &minus;15&nbsp;dB, a repeating call to &minus;17</td></tr>
+<tr><td>Announce channels</td><td>400, 800 and 1,200&nbsp;Hz; QPSK at 200 baud; 0.64&nbsp;s per frame; decodes to &minus;5&nbsp;dB</td></tr>
+<tr><td>Bulk strip</td><td>1,500&ndash;3,000&nbsp;Hz; OFDM, 28 carriers at 37.5 symbols per second; 5.44&nbsp;s per frame; from about +3&nbsp;dB at rate 1/2, 1 to 2&nbsp;dB more at the higher rates</td></tr>
 <tr><td>Bulk control channel</td><td>2,250&nbsp;Hz, shared in time with the bulk signal</td></tr>
 <tr><td>Error correction</td><td>Reed-Solomon (23,11) on short frames; LDPC rate 1/2, 3/4, 5/6 on bulk frames</td></tr>
 <tr><td>Bulk frame payload</td><td>603, 907 or 1,008 bytes by rate</td></tr>
 <tr><td>Useful speed</td><td>about 9, 130 and 900&ndash;1,500&nbsp;bit/s (emergency, announce, bulk)</td></tr>
-<tr><td>Signal levels</td><td>Signal-to-noise ratio in 3&nbsp;kHz</td></tr>
+<tr><td>Signal levels</td><td>Signal-to-noise ratio in 3&nbsp;kHz; bulk is tried from an estimated +6&nbsp;dB</td></tr>
 <tr><td>Shortburst</td><td>1 to 156 bytes, up to 16 announce frames</td></tr>
 <tr><td>Longburst</td><td>157 to 601 bytes on a weak path</td></tr>
 <tr><td>Bulk transfer</td><td>up to 64 frames, 10 per transmission; about 64,000 bytes</td></tr>
 <tr><td>Largest broadcast</td><td>about 6,000 bytes</td></tr>
 <tr><td>Reply after a transmission</td><td>about two thirds of a second</td></tr>
 <tr><td>Relay offer conditions</td><td>holds a copy; heard the recipient within 2 minutes; path of &minus;5&nbsp;dB or better</td></tr>
+<tr><td>Relay hops</td><td>no fixed limit; one handshake per hop</td></tr>
+<tr><td>Overheard copies</td><td>kept until the operator prunes the database</td></tr>
 <tr><td>Retry gaps for a waiting message</td><td>1, 2, 4, 8, 16, then 32 minutes</td></tr>
-<tr><td>Mail lifetime</td><td>never expires</td></tr>
+<tr><td>Mail lifetime</td><td>never expires; the mailserver keeps delivered mail unless a retention period is set</td></tr>
 <tr><td>Distress call</td><td>1 to 15 frames; up to 182 characters; repeats about every 75 to 90&nbsp;s</td></tr>
 <tr><td>Named net</td><td>up to 127 members; roll-call slot 1.2&nbsp;s</td></tr>
 <tr><td>Cluster</td><td>up to 16 members</td></tr>
-<tr><td>Frames sent in the clear, in simulation</td><td>all of them in a net where every station hears the others; at least 97.8&nbsp;% in a stress test where many stations cannot hear one another</td></tr>
+<tr><td>New station</td><td>listens 10 minutes before beaconing; operator messages go out at once</td></tr>
+<tr><td>Frames overlapped by another station, in simulation</td><td>0 to about 2&nbsp;% with 12 to 38 stations; about a quarter with 200 on one frequency</td></tr>
 </tbody>
 </table>
 
 <p class="more">Every figure here is defined, with its source in the code,
-in Appendix A of the full manual.</p>
+in <a class="xman" href="mlink_manual.html#numbers-at-a-glance">Numbers at a Glance</a> of the full manual.</p>
 
 </section>
 </main>

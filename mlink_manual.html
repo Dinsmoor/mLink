@@ -57,7 +57,7 @@ a.term {
 }
 a.term:hover { background: var(--accent-soft); }
 .term.missing { outline: 1px dashed red; }
-.xref.broken { color: red; }
+.xref.broken, .xman.broken { color: red; }
 code, kbd, pre { font-family: var(--mono); font-size: 0.86em; }
 code { background: var(--code-bg); padding: 0.05em 0.3em; border-radius: 3px; }
 pre {
@@ -292,8 +292,10 @@ that name too.</p>
 <section class="chapter" id="what-is-mlink"><header class="chapter-head"><span class="chapno">Chapter 1</span><h1>What mLink Is</h1></header>
 
 <aside class="plain">
-mLink turns a transceiver, a sound card and a computer into a station on a
-shared data network. You type a message or a piece of mail, and your station
+mLink is a concurrent global radio mail system. It turns a transceiver, a
+sound card and a computer into a station on a shared data network, where one
+frequency carries several exchanges at once and a mail reaches any callsign
+anywhere, by radio alone or through any station with internet access. You type a message or a piece of mail, and your station
 works out how to get it to the other operator: directly if it can, through
 another station if it cannot, or later if nobody is in reach right now.
 mLink is one complete system, from the modem on the air to the mailbox on
@@ -1546,6 +1548,12 @@ This chapter covers getting the software, the few settings every station
 must make, and a first test of the whole chain.
 </aside>
 
+<aside class="note">
+<p><strong>Not yet available for distribution.</strong> mLink is still being
+built and tested; there is no package or source release to download yet. This
+chapter describes installation as it will work when a release is made.</p>
+</aside>
+
 <h2 id="installing--need"><span class="secno">4.1</span> What you need</h2>
 
 <h3 id="installing--radio"><span class="secno">4.1.1</span> At the radio</h3>
@@ -1557,19 +1565,20 @@ about 115&nbsp;Hz to about 2,900&nbsp;Hz, lower at the bottom than many
 voice settings reach (<a class="xref" href="#passband-regions">Chapter 8</a>). FM
 radios are a separate story (<a class="xref" href="#fmlink">Chapter 32</a>).</li>
 <li><strong>A sound interface</strong> between the radio's audio and the
-computer. Three kinds are common: an interface of the SignaLink type, which keys the
-radio by <a class="term" href="#g-vox" title="Keying the transmitter automatically when audio arrives. Slow to react, so a station declared as VOX-keyed sends a short leader tone before each transmission.">VOX</a>; one of the Digirig
-type, which also gives the computer a serial line that can key the radio;
-or a radio with a sound card built in, where one USB cable carries the
-audio and the radio's control commands.</li>
+computer, with its own way of keying the radio. Three kinds are common: an
+interface of the SignaLink or Digirig type, which gives the computer a line
+that keys the radio's <a class="term" href="#g-ptt" title="The line or command that switches a transceiver from receive to transmit. mLink can key a radio by CAT command, by a serial-port control line, or by VOX.">PTT</a>
+(push-to-talk); a radio with a sound card built in, where one USB cable
+carries the audio and the radio's control commands; or, as a last resort,
+an interface that keys the radio by <a class="term" href="#g-vox" title="Keying the transmitter automatically when audio arrives. Slow to react, so a station declared as VOX-keyed sends a short leader tone before each transmission.">VOX</a>.</li>
 <li><strong>A way to key the transmitter.</strong> mLink knows three:
-a serial control line (RTS or DTR) wired to the radio's
-<a class="term" href="#g-ptt" title="The line or command that switches a transceiver from receive to transmit. mLink can key a radio by CAT command, by a serial-port control line, or by VOX.">PTT</a> (push-to-talk); a
+a serial control line (RTS or DTR) wired to the PTT; a
 <a class="term" href="#g-cat" title="Control of a radio from a computer over a serial or USB cable: keying, frequency and mode.">CAT</a> command (computer-aided
 transceiver, the radio's own control protocol); or VOX, where the audio
-itself keys the radio. The first two are faster, and
-<a class="xref" href="#installing--vox-leader">Section 4.3.6</a> says why that
-matters.</li>
+itself keys the radio. Use one of the first two. VOX is not recommended on
+HF: the delay before the radio keys is long and uncertain, mLink has to pay
+for it on every transmission, and support for it may be removed.
+<a class="xref" href="#installing--vox-leader">Section 4.3.6</a> says what it costs.</li>
 </ul>
 
 <figure id="installing--fig-station">
@@ -3763,30 +3772,42 @@ It is tempting to treat the allotment lines as the spectral truth and set every 
 <p>The audio coming out of your receiver is one stream of numbers. If one station is sending an announce frame on 800&nbsp;Hz, another is halfway through a bulk burst, and a third is sending a distress call, your audio is simply those three signals <em>added together</em>, plus noise. There is no switchboard and no time slot; the rigs and the air do the adding.</p>
 
 <figure id="passband-regions--fig-sum">
-<svg viewBox="0 0 640 250" role="img" aria-label="Time-frequency sketch of one listener's audio. Station A sends two opening frames on the bulk-control channel at 2250 Hz, then a bulk burst at 1594 to 2906 Hz. Station B sends a long distress call at 150 Hz through the same time. Station C sends two announce frames at 400 Hz, and station D two at 800 Hz. All overlap in time and are separated by frequency.">
+<svg viewBox="0 0 640 280" role="img" aria-label="Time-frequency sketch of one listener's audio. Station A sends two opening frames on the bulk-control channel at 2250 Hz, then a bulk burst at 1594 to 2906 Hz. Station B sends a long distress call at 150 Hz through the same time. Station D sends two announce frames at 800 Hz, station C two at 400 Hz, and station E two at 1200 Hz at the same moment as C. Later, station C sends again, this time at 1200 Hz. All overlap in time and are separated by frequency.">
 <!-- axes -->
-<line x1="70" y1="200" x2="620" y2="200" style="stroke:var(--ink)" stroke-width="1.5"/>
-<line x1="70" y1="200" x2="70" y2="20" style="stroke:var(--ink)" stroke-width="1.5"/>
-<text x="345" y="236" font-size="12" text-anchor="middle" style="fill:var(--ink)">time →</text>
+<line x1="70" y1="230" x2="620" y2="230" style="stroke:var(--ink)" stroke-width="1.5"/>
+<line x1="70" y1="230" x2="70" y2="20" style="stroke:var(--ink)" stroke-width="1.5"/>
+<text x="345" y="266" font-size="12" text-anchor="middle" style="fill:var(--ink)">time →</text>
 <g font-size="11" text-anchor="end" style="fill:var(--ink)">
-<text x="64" y="194">150</text><text x="64" y="163">400</text><text x="64" y="133">800</text>
-<text x="64" y="104">1500</text><text x="64" y="71">2250</text><text x="64" y="30">3000 Hz</text>
+<text x="64" y="224">150</text><text x="64" y="194">400</text><text x="64" y="164">800</text>
+<text x="64" y="134">1200</text><text x="64" y="104">1500</text><text x="64" y="71">2250</text><text x="64" y="30">3000 Hz</text>
 </g>
 <!-- station B: emergency strip -->
-<rect x="90" y="186" width="510" height="10" style="fill:var(--ink)"/>
-<text x="345" y="215" font-size="11" text-anchor="middle" style="fill:var(--ink)">station B: distress call, 150 Hz</text>
+<rect x="90" y="216" width="510" height="10" style="fill:var(--ink)"/>
+<text x="345" y="245" font-size="11" text-anchor="middle" style="fill:var(--ink)">station B: distress call, 150 Hz</text>
 <!-- station C: announce frames at 400 -->
 <g style="fill:none;stroke:var(--ink)" stroke-width="1.2">
-<rect x="300" y="152" width="62" height="16"/>
-<rect x="366" y="152" width="62" height="16"/>
+<rect x="300" y="182" width="62" height="16"/>
+<rect x="366" y="182" width="62" height="16"/>
 </g>
-<text x="364" y="146" font-size="11" text-anchor="middle" style="fill:var(--ink)">station C</text>
+<text x="364" y="176" font-size="11" text-anchor="middle" style="fill:var(--ink)">station C</text>
 <!-- station D: announce frames at 800 -->
 <g style="fill:none;stroke:var(--ink)" stroke-width="1.2">
-<rect x="130" y="122" width="62" height="16"/>
-<rect x="196" y="122" width="62" height="16"/>
+<rect x="130" y="152" width="62" height="16"/>
+<rect x="196" y="152" width="62" height="16"/>
 </g>
-<text x="194" y="116" font-size="11" text-anchor="middle" style="fill:var(--ink)">station D</text>
+<text x="194" y="146" font-size="11" text-anchor="middle" style="fill:var(--ink)">station D</text>
+<!-- station E: announce frames at 1200, at the same moment as C -->
+<g style="fill:none;stroke:var(--ink)" stroke-width="1.2">
+<rect x="318" y="122" width="62" height="16"/>
+<rect x="384" y="122" width="62" height="16"/>
+</g>
+<text x="382" y="116" font-size="11" text-anchor="middle" style="fill:var(--ink)">station E</text>
+<!-- station C again, later, on a different channel -->
+<g style="fill:none;stroke:var(--ink)" stroke-width="1.2" stroke-dasharray="4,2">
+<rect x="480" y="122" width="62" height="16"/>
+<rect x="546" y="122" width="62" height="16"/>
+</g>
+<text x="544" y="116" font-size="11" text-anchor="middle" style="fill:var(--ink)">station C, next message</text>
 <!-- station A: opener on the bulk-control channel at 2250, then bulk -->
 <g style="fill:var(--accent-soft);stroke:var(--accent)" stroke-width="1.2">
 <rect x="110" y="59" width="62" height="16"/>
@@ -3797,7 +3818,7 @@ It is tempting to treat the allotment lines as the spectral truth and set every 
 <text x="174" y="52" font-size="11" text-anchor="middle" style="fill:var(--ink)">station A: presence, opener</text>
 <line x1="70" y1="104" x2="620" y2="104" style="stroke:var(--muted)" stroke-dasharray="3,3"/>
 </svg>
-<figcaption><span class="figno">Figure 8.3.</span> What one listener's audio contains. Signals from different stations overlap in time and are told apart by frequency. Station A's own transmission stays in the bulk region: its opening frames go on the bulk-control channel at 2250&nbsp;Hz, and the bulk burst follows them. (Sketch; not to scale.)</figcaption>
+<figcaption><span class="figno">Figure 8.3.</span> What one listener's audio contains. Signals from different stations overlap in time and are told apart by frequency. Stations C and E transmit at the same moment on different announce channels, and C's next message goes out on whichever channel is free, not the one it used before. Station A's own transmission stays in the bulk region: its opening frames go on the bulk-control channel at 2250&nbsp;Hz, and the bulk burst follows them. (Sketch; not to scale.)</figcaption>
 </figure>
 
 <p>Taking the sum apart is equally simple: every detector and demodulator in the receiver is handed the same audio, and each looks only at its own strip through its own filter (<a class="xref" href="#receiver">Chapter 13</a>). Because the strips do not overlap, the other signals are, to it, silence.</p>
